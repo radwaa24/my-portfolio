@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom';
 
 
 const Certificates = () => {
-
-
   return (
     <>
-   <body>o
-      <div className='bg-gradient-to-b from-red-200 to-red-50 grid p-5 h-auto'>
+   <body  className='bg-gradient-to-b from-red-200 to-red-50 grid pb-10 h-auto'>
 <div className='text-center mt-6'>
     <Link to="/" className=" mx-2
      bg-red-50 text-gray-700 hover:bg-gradient-to-t from-gray-100 to-red-300 
@@ -73,9 +70,6 @@ const Certificates = () => {
         <h1 className='font-bold font-serif text-slate-800 hover:font-mono mt-2'>CodeCademy</h1> </a>
       </div>
       </div>
-
-
-    </div>
     </body>
     </>
     );
