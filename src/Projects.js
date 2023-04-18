@@ -33,7 +33,7 @@ const Projects = () => {
          <a href='https://little-limon.vercel.app/' target='_blank' rel="noreferrer" >
         <img src={littlelimon} alt='little-limon'
         className='w-full' />
-        <h1 className='font-bold font-serif text-slate-800 hover:font-mono py-3'>Little Limon Resturant</h1> 
+        <h1 className='font-bold font-serif text-slate-800 hover:font-mono py-3'>Little Lemon Resturant</h1> 
         <p className='font-serif text-slate-800'> a capstone project guided by Meta Front end web developer, a simple Resturant's website including reservation page </p> </a>
       </div>
 

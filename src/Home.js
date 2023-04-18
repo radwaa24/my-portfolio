@@ -44,7 +44,7 @@ export default function Home() {
     </div>
           <div className='text-center mt-8'>
           <a className="px-14 bg-gradient-to-b from-red-100  to-gray-50 hover:bg-gradient-to-t from-gray-100 to-red-50 px-4 py-2 rounded-md font-semibold text-lg"
-            href="https://drive.google.com/file/d/19oBGfikacniWgsiWl65nmDEG93mTgG7d/view?usp=sharing" target="blank" >Resume</a>
+            href="https://drive.google.com/file/d/1cChRtyhvqbHc3FQAJmff5PbF8fdv1nxT/view?usp=sharing" target="blank" >Resume</a>
           </div>
         </section>
       </main>

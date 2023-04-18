@@ -31,7 +31,7 @@ const Certificates = () => {
          <a href='https://drive.google.com/file/d/1XRDk4eLW4SNlkOHXrlEOSf_DZIfOqTIR/view?usp=sharing' target="_blank" rel="noreferrer" >
         <img src={require("./UM.png")} alt='little-limon'
         className='w-full ' />
-        <h1 className='font-bold font-serif text-slate-800 hover:font-mono mt-2'>University of michigan</h1> </a> 
+        <h1 className='font-bold font-serif text-slate-800 hover:font-mono mt-2'>University of Michigan</h1> </a> 
       </div>
 
 
@@ -58,7 +58,7 @@ const Certificates = () => {
         <a href='https://drive.google.com/file/d/1fO1hOcKJyqKx8JxmjDrjlYYpL20pNvE6/view?usp=sharing' target="_blank" rel="noreferrer" >
         <img src={require("./fwd.png")} alt='little-limon'
         className='w-full mb-5' />
-        <h1 className='font-bold font-serif text-slate-800 hover:font-mono mt-2'>Fwd</h1> </a>
+        <h1 className='font-bold font-serif text-slate-800 hover:font-mono mt-2'>FWD</h1> </a>
       </div>
 
 
