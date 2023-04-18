@@ -7,15 +7,15 @@ const Certificates = () => {
   
    <body  className='bg-gradient-to-b from-red-200 to-red-50 grid pb-10 h-auto'>
 <div className='text-center mt-6'>
-    <Link to="/" className=" mx-2
+    <Link to="/" className=" mx-1
      bg-red-50 text-gray-700 hover:bg-gradient-to-t from-gray-100 to-red-300 
       p-2 rounded-md font-medium"
     >Home</Link>
-     <Link to="/projects" className=" mx-2
+     <Link to="/projects" className=" mx-1
      bg-red-50 text-gray-700 hover:bg-gradient-to-t from-gray-100 to-red-300 
       p-2 rounded-md font-medium"
     >Projects</Link>
-     <Link to="/contactMe" className=" mx-2
+     <Link to="/contactMe" className=" mx-1
      bg-red-50 text-gray-700 hover:bg-gradient-to-t from-gray-100 to-red-300 
       p-2 rounded-md font-medium"
     >Contact Me</Link>
@@ -62,7 +62,7 @@ const Certificates = () => {
       </div>
 
 
-      <div className='mx-28 w-auto col-span-2  lg:mx-64
+      <div className='mx-20 block col-span-2  lg:mx-64 w-fit
     bg-red-100 px-4 pt-4 hover:bg-red-50 text-center rounded-3xl'>
          <a href='https://drive.google.com/file/d/1Oo2Nh3KypxGQkp8gQWk8w_kZLFXGuXWQ/view?usp=sharing' target="_blank" rel="noreferrer" >
         <img src={require("./codecdmy.png")} alt='little-limon'
