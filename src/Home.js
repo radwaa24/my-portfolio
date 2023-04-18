@@ -23,8 +23,10 @@ export default function Home() {
       <main className='bg-red-200'>
         <section className="min-h-screen ">
           <div>
+            <div className=" w-64 h-64 overflow-hidden rounded-full mx-auto block ">
             <img src={personal}
-            className='w-80 h-80 rounded-full flex mx-auto pt-8' alt="radwa" /> <br />
+            className=' object-cover object-center w-full h-full' alt="radwa" /> 
+            </div><br />
                   <h1 className=" text-center font-bold text-3xl hover:font-serif text-gray-900">Radwa Khalaf</h1>
 
             <h1 className="text-center font-bold text-2xl"> Front-End Web Developer</h1>
