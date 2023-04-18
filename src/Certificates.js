@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Certificates = () => {
   return (
-    <>
+  
    <body  className='bg-gradient-to-b from-red-200 to-red-50 grid pb-10 h-auto'>
 <div className='text-center mt-6'>
     <Link to="/" className=" mx-2
@@ -71,7 +71,6 @@ const Certificates = () => {
       </div>
       </div>
     </body>
-    </>
     );
 };
 
