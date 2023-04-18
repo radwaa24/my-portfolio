@@ -39,7 +39,7 @@ const Projects = () => {
 
     <div className='
     bg-red-100 p-4 hover:bg-red-50 text-center rounded-3xl'>
-        <a href='https://todobyradwa-j8qudojxy-radwaa24.vercel.app/'target='_blank' rel="noreferrer" >
+        <a href='https://todobyradwa.vercel.app/'target='_blank' rel="noreferrer" >
         <img src={todo} alt='todo'
         className='w-full ' />
         <h1 className='font-bold font-serif text-slate-800 hover:font-mono py-3'> TODO List APP </h1> 
