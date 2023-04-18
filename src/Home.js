@@ -21,9 +21,9 @@ export default function Home() {
     </header>
 
       <main className='bg-red-200'>
-        <section className="min-h-screen ">
+        <section className="min-h-screen pt-10 ">
           <div>
-            <div className=" w-64 h-64 overflow-hidden rounded-full mx-auto block ">
+            <div className=" w-64 h-64 overflow-hidden rounded-full mx-auto block">
             <img src={personal}
             className=' object-cover object-center w-full h-full' alt="radwa" /> 
             </div><br />
