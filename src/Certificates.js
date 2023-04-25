@@ -28,7 +28,7 @@ const Certificates = () => {
 
       <div className='m-2
       bg-red-100 px-4 pt-5 hover:bg-red-50 text-center rounded-3xl'>
-         <a href='https://drive.google.com/file/d/1XRDk4eLW4SNlkOHXrlEOSf_DZIfOqTIR/view?usp=sharing' target="_blank" rel="noreferrer" >
+         <a href='https://drive.google.com/file/d/1_vmc3MKJsdSLxMjTByYtvPPtbHv5KFZu/view?usp=sharing' target="_blank" rel="noreferrer" >
         <img src={require("./UM.png")} alt='little-limon'
         className='w-full ' />
         <h1 className='font-bold font-serif text-slate-800 hover:font-mono mt-2'>University of Michigan</h1> </a> 
@@ -37,7 +37,7 @@ const Certificates = () => {
 
     <div className='m-2
     bg-red-100 px-4 pt-5 hover:bg-red-50 text-center rounded-3xl'>
-         <a href='https://drive.google.com/file/d/1PKhn07vkNtn5Xp-nuFimJPLd1mhNS4iQ/view?usp=sharing' target="_blank" rel="noreferrer" >
+         <a href='https://drive.google.com/file/d/1goUCFzpM7UPEhMVVea2gLkPOSaI-71xZ/view?usp=sharing' target="_blank" rel="noreferrer" >
         <img src={require("./meta.png")} alt='little-limon'
         className='w-full' />
         <h1 className='font-bold font-serif text-slate-800 hover:font-mono pt-5'>Meta</h1> </a>
