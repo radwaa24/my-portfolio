@@ -23,7 +23,7 @@ const ContactMe = () => {
 
   return (
     <>
-<div className='bg-gradient-to-b from-red-200 to-red-50 grid px-3 h-auto pb-16'>
+<div className='bg-gradient-to-b from-red-200 to-red-50 grid p-10'>
 <div className='text-center mt-6'>
     <Link to="/" className=" mx-2
      bg-red-50 text-gray-700 hover:bg-gradient-to-t from-gray-100 to-red-300 
@@ -47,7 +47,7 @@ const ContactMe = () => {
       </div>
 
       <form action="#" method="POST" ref={form} onSubmit={sendEmail}
-       className="grid mx-20 lg:mx-96 mt-14 h-fit">
+       className="grid mx-20  lg:px-72 mt-14 h-fit">
         <div className="grid grid-cols-1 gap-y-6 gap-x-8">
 
           <div className="sm:col-span-2">
@@ -60,7 +60,7 @@ const ContactMe = () => {
                 name="user_name"
                 id="user_name"
                 autoComplete="given-name"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -74,7 +74,7 @@ const ContactMe = () => {
                 name="company"
                 id="company"
                 autoComplete="organization"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -88,7 +88,7 @@ const ContactMe = () => {
                 name="email"
                 id="email"
                 autoComplete="email"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
               />
             </div>
           </div>
@@ -104,7 +104,7 @@ const ContactMe = () => {
                 name="phone-number"
                 id="phone-number"
                 autoComplete="tel"
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
               />
               </div>
           </div>
@@ -117,7 +117,7 @@ const ContactMe = () => {
                 name="message" required
                 id="message"
                 rows={4}
-                className="block w-full rounded-md border-0 py-2 px-3.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600 sm:text-sm sm:leading-6"
                 defaultValue={''}
               />
             </div>
