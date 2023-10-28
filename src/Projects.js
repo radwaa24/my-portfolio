@@ -31,7 +31,7 @@ const Projects = () => {
     {/* ////////////////////////////// */}
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-20 gap-8 max-w-7xl mx-auto px-5'>
     <div className='p-4 bg-red-100 hover:bg-red-50 text-center rounded-3xl'>
-      <video src={caveo} controls autoPlay ></video>
+      <video src={caveo} controls autoPlay muted loop playsInline ></video>
       <h1 className='font-bold font-serif text-slate-800 hover:font-mono py-3'>Caveo</h1> 
       <p className='font-serif text-slate-800'>Replacing the WordPress Version Using Vue and Laravel and Tailwindcss, Adding new dynamic components 
       <a href='https://caveo.app' target='_blank' rel="noreferrer" >
