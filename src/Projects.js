@@ -13,7 +13,7 @@ import caveo from './assets/caveo.mp4';
 const Projects = () => {
   return (
     <>
-    <body className='bg-gradient-to-b from-red-200 to-red-50 grid p-10'>
+    <body className='bg-gradient-to-b from-red-200 to-red-50 grid py-10'>
 <div className='text-center mt-6'>
     <Link to="/" className="
      bg-red-50 text-gray-700 hover:bg-gradient-to-t from-gray-100 to-red-300 
@@ -29,7 +29,7 @@ const Projects = () => {
     >Contact Me</Link>
     </div>
     {/* ////////////////////////////// */}
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-20 gap-8 max-w-7xl mx-auto'>
+    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-20 gap-8 max-w-7xl mx-auto px-5'>
     <div className='p-4 bg-red-100 hover:bg-red-50 text-center rounded-3xl'>
       <video src={caveo} controls autoPlay ></video>
       <h1 className='font-bold font-serif text-slate-800 hover:font-mono py-3'>Caveo</h1> 

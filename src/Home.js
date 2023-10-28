@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
    
-    <body className=" w-full bg-red-200 justify-center h-screen">
+    <body className="bg-gradient-to-b from-red-200 to-red-50 min-h-screen pb-10">
     <header className="w-full">
     <div className='text-center py-10
     bg-gradient-to-t from-red-200 to-red-100'>
@@ -28,14 +28,14 @@ export default function Home() {
     </header>
 
 
-        <section>
+        <section className="my-auto">
          <div className="flex flex-col mt-10 justify-center items-center mx-auto my-auto">
             <div className="my-5 w-64 h-64 hover:animate-bounce overflow-hidden rounded-full block">
             <img src={personal}
             className=' object-cover  object-center w-full h-full' alt="radwa" /> 
             </div>
             <h1 className=" font-bold text-4xl text-gray-900">Radwa Khalaf</h1>
-            <h1 className=" font-bold text-3xl mt-1"> Front-End Web Developer</h1>
+            <h1 className=" font-bold md:text-3xl text-xl mt-1"> Front-End Web Developer</h1>
             <h2 className="text-center font-medium text-md px-4 pt-6">Passionate about making a good design and improving accessibility using the power of react and Vue for a great user experience</h2>
 
           </div>
