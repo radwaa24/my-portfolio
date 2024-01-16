@@ -1,0 +1,88 @@
+#tabs {
+  display: flex;
+}
+
+
+#searchbar {
+  height: 45px;
+  width: 750px;
+  margin-top: 10px;
+  border: none;
+  background-color: #F4F0F0;
+  border-radius: 39px;
+  text-indent: 40px;
+}
+
+.searchimage {
+  width: 22.582px;
+  height: 22.904px;
+  flex-shrink: 0;
+  margin-left: 22px;
+  position: absolute;
+  margin-top: 10px;
+  cursor: pointer;
+
+}
+
+
+
+#add {
+  margin-left: 23px;
+  margin-top: 16.21px;
+  margin-bottom: 15.27px;
+  width: 35px;
+  cursor: pointer;
+
+}
+
+#bell {
+  margin-top: 15px;
+}
+
+#profileimg {
+  margin-top: 16.07px;
+  margin-bottom: 14.83px;
+  cursor: pointer;
+  align-self: left;
+  width: 35px;
+  height: 35px;
+
+}
+
+#topdropdown {
+  width: 195px;
+  height: 38px;
+
+  margin-top: 13px;
+  border-radius: 27px;
+  color: rgb(159, 49, 43);
+  border: 1px solid rgb(159, 49, 43);
+  font-weight: 600;
+  font-size: 26px;
+  background-color: white;
+
+}
+
+#dropicon {
+  color: rgb(159, 49, 43);
+  border: none;
+  height: inherit;
+}
+
+#dropitems {
+  color: var(--primary-900, #00172E);
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  background-color: white;
+  z-index: 10000000;
+  line-height: 150%;
+  /* 22.5px */
+}
+#chaticon{
+  width: 31.93px;
+height: 31.93px;
+flex-shrink: 0;
+color: blue;
+}

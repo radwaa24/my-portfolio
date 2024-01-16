@@ -1,0 +1,104 @@
+.header {
+    color: var(--primary-900, #00172E);
+    font-family: Roboto;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    margin-top: 17px;
+    margin-bottom: 35px;
+    margin-left: 10px;
+
+}
+
+.titletxt {
+    max-width: 100%;
+    min-height: 65px;
+    max-height: auto;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #F4F0F0;
+    margin-bottom: 12px;
+    margin-top: 60px;
+}
+
+.desctxt {
+    min-width: 1010px;
+    max-width: 100%;
+    min-height: 111px;
+    max-height: auto;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #F4F0F0;
+    margin-bottom: 45px;
+}
+
+.actions {
+    position: relative;
+    min-width: 1010px;
+    max-width: 100%;
+}
+
+.dropdown {
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 3.75px;
+    position: inherit;
+    z-index: 1000;
+}
+
+.codetxt {
+    
+    height: 24px;
+    flex-shrink: 0;
+    color: #969696;
+    font-family: Roboto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    margin-top: 0;
+    padding-bottom: 2px;
+    margin-left: 17px;
+    /* 30px */
+
+}
+
+.addingproduct {
+    height: 110px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background-color: #F7F7F7;
+    margin-bottom: 13px;
+    display: flex;
+}
+
+.deleteicon {
+    width: 17.557px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.ordericon {
+    width: 13.377px;
+    flex-shrink: 0;
+
+
+}
+
+.line {
+    width: inherit;
+    color: #B0B0B2;
+    padding: 0;
+    stroke-width: 1px;
+}
+
+.listnumber {
+    margin-left: 12px;
+    color: #000;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 600;
+    position: absolute;
+}

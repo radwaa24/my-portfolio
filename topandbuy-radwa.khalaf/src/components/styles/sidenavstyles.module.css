@@ -1,0 +1,74 @@
+
+#nav {
+  scroll-behavior: none;
+}
+.productname {
+  margin: 5px;
+  color: #00172E;
+  font-weight: 500;
+  color: var(--Primary-900, #00172E);
+  font-family: Roboto;
+  font-size: 15px;
+  font-style: normal;
+  position: absolute;
+  margin-left: 60px;
+  /* 22.5px */
+
+}
+
+#productheader {
+  font-family: 'Roboto';
+  font-weight: 800;
+  font-size: 24px;
+  text-indent: 15px;
+  color: #000000;
+}
+
+#producttabs {
+  background-color: #FAF6F6;
+  border-radius: 10px;
+  scroll-behavior: none;
+}
+
+#header {
+  color: #000;
+  font-family: Roboto;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 150%; /* 30px */
+
+}
+
+.peopleimg {
+  width: 37px;
+  height: 35px;
+  padding: 2px;
+  vertical-align: middle;
+  text-align: center;
+  margin: 5px;
+}
+
+
+#peopletabs {
+  margin-top: 30px;
+  box-sizing: border-box;
+  background-color: #FAF6F6;
+  border-radius: 10px;
+  scroll-behavior: none;
+
+}
+
+.peoplecontainer {
+  display: flex;
+  width: inherit;
+}
+
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300ita‌​lic,400italic,500,500italic,700,700italic,900italic,900);
+
+html,
+body,
+html * {
+  font-family: 'Roboto', sans-serif;
+}

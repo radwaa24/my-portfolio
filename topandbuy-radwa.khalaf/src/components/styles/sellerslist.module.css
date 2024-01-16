@@ -1,0 +1,56 @@
+.header {
+  color: var(--Primary-900, #00172E);
+  font-family: Roboto;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  /* 19.5px */
+}
+
+#num {
+  color: '#AD2323';
+}
+
+.closeIcon {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  margin: 5px;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+
+.caption {
+  color: var(--Primary-900, #00172E);
+  font-family: Roboto;
+  font-size: 13.273px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  /* 19.909px */
+}
+
+.price {
+  justify-content: stretch;
+  color: var(--Primary-900, #00172E);
+  font-family: Roboto;
+  font-size: 19.755px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  /* 29.632px */
+}
+
+.seller {
+  justify-content: start;
+  color: var(--Primary-900, #00172E);
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 150%;
+  /* 19.5px */
+}

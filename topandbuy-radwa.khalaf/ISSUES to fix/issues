@@ -1,0 +1,13 @@
+1. Size of the components: When browser size changes, the components should be resized. 
+2. Position of the components: When browser size change, the components should be repositioned.
+3. The components should be able to be dragged and dropped to a new position. (optional)
+4. All data used in the components are dummy data. Must connect to the database to get the real data.
+5. Check for TODOs in the code and complete them.
+6. The code should be clean and easy to read. Apply design patterns if necessary.
+7. The code should be able to run on all browsers (IE, Chrome, Firefox, Safari, etc.)
+8. The code should be able to run on all devices (desktop, tablet, mobile, etc.) (not required for initial test)
+9. Add a success popup after login
+10. Add a loading component
+11. Add avatar for user
+12. Rendering of each post depends on what user provides in createpost
+

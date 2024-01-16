@@ -1,0 +1,51 @@
+export const dummySellers = [
+  {
+    id: 1,
+    name: "Seller 1",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+  {
+    id: 2,
+    name: "Seller 2",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+  {
+    id: 2,
+    name: "Seller 3",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+  {
+    id: 2,
+    name: "Seller 4",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+  {
+    id: 2,
+    name: "Seller 4",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+  {
+    id: 2,
+    name: "Seller 5",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+  {
+    id: 2,
+    name: "Seller 6",
+    image: require('../../components/images/RectangleNoProd.png'),
+    price: "XXX,xx$",
+    link: "https://www.google.com",
+  },
+]

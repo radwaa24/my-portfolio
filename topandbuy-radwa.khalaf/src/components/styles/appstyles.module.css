@@ -1,0 +1,57 @@
+#header {
+  position: sticky;
+  margin-top: 0px;
+  white-space: nowrap;
+
+  @media screen and (max-width: 768x) {
+    display: none;
+  }
+}
+
+#column {
+  width: fit-content;
+  height: 91vh;
+  margin: 0px;
+  /*   width: 357px; */
+  /* figma width */
+}
+
+#base {
+  height: 100%;
+  text-align: center;
+  margin: 0px;
+}
+
+#rightside {
+  height: 91vh;
+  margin: 0px;
+}
+
+#container {
+  table-layout: fixed;
+  scroll-behavior: none;
+  height: fit-content;
+  margin: 0px;
+  width: fit-content;
+
+
+}
+
+.button {
+  background-color: black;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 40px;
+  margin: 5px 0px;
+  cursor: pointer;
+  height: 31.17px;
+  /* figmawidth and height */
+
+  &:disabled {
+    color: grey;
+    opacity: 0.7;
+    cursor: default;
+  }
+}

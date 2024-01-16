@@ -1,0 +1,52 @@
+.carddata {
+    color: var(--Primary-900, #00172E);
+    font-family: Roboto;
+    font-size: 18.042px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    /* 27.063px */
+}
+
+.cardlabel {
+    color: #9D9D9D;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    /* 24px */
+}
+
+.menu {
+    display: flex;
+    padding: 10px;
+    margin-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background-color: #FAF6F6;
+    position: relative;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+    
+
+}
+
+.menulabel {
+    color: var(--Primary-900, #00172E);
+    font-family: Roboto;
+    font-size: 18.042px;
+    font-style: normal;
+    font-weight: 400;
+    display: flex;
+    padding: 2px 8px;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+
+
+}
