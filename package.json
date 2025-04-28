@@ -1,0 +1,29 @@
+{
+  "name": "new-one",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@flaticon/flaticon-uicons": "^3.3.1",
+    "@yeger/vue-masonry-wall": "^5.0.18",
+    "aos": "^2.3.4",
+    "emailjs-com": "^3.2.0",
+    "swiper": "^11.2.0",
+    "typed.js": "^2.1.0",
+    "vue": "^3.5.13",
+    "vue-masonry-css": "^1.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.5"
+  }
+}
