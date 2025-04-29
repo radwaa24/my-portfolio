@@ -27,7 +27,7 @@
               <img
                 :src="certificate.img"
                 alt="certificate image"
-                class="lg:object-contain max-md:mt-6 lg:rounded-none lg:max-h-[350px] lg:min-h-[300px] h-full"
+                class="object-contain max-md:mt-6 lg:rounded-none lg:max-h-[350px] lg:min-h-[300px]"
               />
             </a>
             <div class="mt-4 font-semibold">{{ certificate.name }}</div>

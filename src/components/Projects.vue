@@ -13,7 +13,7 @@
     >
       <template #default="{ item }">
         <div class="p-4 bg-red-50 shadow-inner rounded-sm">
-          <video class="w-full h-auto" controls autoplay>
+          <video class="w-full h-auto" controls autoplay muted playsinline>
             <source :src="item.video" type="video/mp4" />
           </video>
           <h3 class="text-xl font-bold mt-4">{{ item.title }}</h3>

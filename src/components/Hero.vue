@@ -37,8 +37,8 @@
 <script setup>
 import { onMounted, ref, onBeforeUnmount } from "vue";
 import Typed from "typed.js";
-import bg from "../assets/ten.JPG";
-import bg2 from "../assets/eight.JPG";
+import bg from "../assets/ten.webp";
+import bg2 from "../assets/eight.webp";
 
 const typedRef = ref(null);
 const currentBg = ref(bg); // Track the current background image
