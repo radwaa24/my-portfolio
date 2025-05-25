@@ -5,16 +5,20 @@
     :style="{
       backgroundImage: `url(${currentBg})`,
       transition: 'background-image 1s ease-in-out', // Smooth transition
+      backgroundColor: '#f0f0f0', // Fallback background color
     }"
     data-aos="fade-in"
   >
-    <!-- 
-      data-aos="fade-up"
-      data-aos-delay="100" -->
+    <!-- Hidden div to preload images -->
+    <div class="hidden">
+      <img :src="bg" alt="Preloading background 1" />
+      <img :src="bg2" alt="Preloading background 2" />
+    </div>
+
     <div
       class="bg-sky-50 w-fit flex flex-col gap-2 items-start justify-center mt-10 mb-5 p-5 bg-opacity-20 rounded-md"
     >
-      <p class="sixtyfour lg:hidden">Radwa khalaf</p>
+      <p class="sixtyfour lg:hidden">Radwa Khalaf</p>
       <p class="sixtyfour">
         <span ref="typedRef" class="typed"></span>
       </p>
@@ -25,7 +29,7 @@
       <i class="fi fi-rr-down animate-arrow"></i>
       <a
         target="_blank"
-        href="https://drive.google.com/file/d/1qjkZAK6-pfvJ6FxwgF4Oyrj6FusUOYgJ/view?usp=sharing"
+        href="https://drive.google.com/file/d/1Yi_Q5cPaNniAqf1vGDrSEXwKpQy8UGO0/view?usp=sharing"
         class="bg-sky-50 p-3 px-8 bg-opacity-20 rounded-md hover:bg-opacity-30"
       >
         Resume
@@ -41,7 +45,7 @@ import bg from "../assets/ten.webp";
 import bg2 from "../assets/eight.webp";
 
 const typedRef = ref(null);
-const currentBg = ref(bg); // Track the current background image
+const currentBg = ref(bg); // Start with the first background image
 
 onMounted(() => {
   // Typed.js initialization
@@ -56,7 +60,7 @@ onMounted(() => {
   // Background image swapping logic
   const interval = setInterval(() => {
     currentBg.value = currentBg.value === bg ? bg2 : bg; // Swap background
-  }, 5000); // 1 minute (60000ms)
+  }, 5000); // 5 seconds
 
   // Cleanup
   onBeforeUnmount(() => {
@@ -65,6 +69,7 @@ onMounted(() => {
   });
 });
 </script>
+
 <style scoped>
 .sixtyfour {
   font-family: "Sixtyfour", serif;
@@ -91,5 +96,8 @@ section {
 .animate-arrow {
   animation: move-up-down 1.5s ease-in-out infinite;
   display: inline-block; /* Ensure it's treated as an inline element */
+}
+.hidden {
+  display: none; /* Ensure the preloading div is hidden */
 }
 </style>

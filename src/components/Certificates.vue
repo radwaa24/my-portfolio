@@ -52,6 +52,7 @@ import codeCademy from "../assets/codecdmy.png";
 import solo from "../assets/solo.png";
 import aice from "../assets/aice.png";
 import fwd from "../assets/fwd.png";
+import freeCode from "../assets/freecode.png";
 
 const certificates = ref([
   {
@@ -70,6 +71,11 @@ const certificates = ref([
     link: "https://drive.google.com/file/d/1Oo2Nh3KypxGQkp8gQWk8w_kZLFXGuXWQ/view?usp=sharing",
   },
   {
+    img: freeCode,
+    name: "FreeCodeCamp",
+    link: "https://www.freecodecamp.org/certification/fcc27c68a8f-117a-4666-aed4-05679ffcb9a6/javascript-algorithms-and-data-structures",
+  },
+  {
     img: solo,
     name: "Solo Learn",
     link: "https://drive.google.com/file/d/1WJAh6iUKVRODZAuSI1FgwjbV3_3qUmW6/view?usp=sharing",
@@ -85,6 +91,7 @@ const certificates = ref([
     link: "https://drive.google.com/file/d/1fO1hOcKJyqKx8JxmjDrjlYYpL20pNvE6/view?usp=sharing",
   },
 ]);
+// https://www.freecodecamp.org/certification/fcc27c68a8f-117a-4666-aed4-05679ffcb9a6/javascript-algorithms-and-data-structures
 </script>
 
 <style scoped>
