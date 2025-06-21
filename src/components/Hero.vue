@@ -29,7 +29,7 @@
       <i class="fi fi-rr-down animate-arrow"></i>
       <a
         target="_blank"
-        href="https://drive.google.com/file/d/1Yi_Q5cPaNniAqf1vGDrSEXwKpQy8UGO0/view?usp=sharing"
+        href="https://drive.google.com/file/d/1GQTnmwh2rrj60lXYa-G_Tsn5QyVN5VKy/view?usp=sharing"
         class="bg-sky-50 p-3 px-8 bg-opacity-20 rounded-md hover:bg-opacity-30"
       >
         Resume
