@@ -93,7 +93,7 @@ const projects = ref([
     description:
       "Led the overhaul of an outdated WordPress-based system, transitioning it to a modern stack.",
     video: caveo,
-    demo: "https://caveo.app/",
+    demo: "https://caveo.com.kw/",
   },
   {
     title: "Orders management",
