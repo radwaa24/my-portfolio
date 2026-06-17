@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useSmoothScroll } from "../composables/useSmoothScroll.js";
 import {
-  profile, aboutFacts, socials, skillGroups, projects, certificates, services, stats,
+  profile, aboutFacts, socials, skillGroups, projects, certificates, services, stats, process, industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -147,6 +147,16 @@ onBeforeUnmount(() => { if (raf) cancelAnimationFrame(raf); cleanup?.(); window.
         <div class="grid4"><a v-for="c in certificates" :key="c.name" :href="c.link" target="_blank" class="cert"><img :src="c.img" :alt="c.name" /><b>{{ c.name }}</b><span>{{ c.issuer }}</span></a></div>
       </section>
 
+      <section class="sec" v-anim="'zoom'">
+        <span class="lab">06 · How it works</span>
+        <div class="grid3"><div v-for="s in process" :key="s.step" class="card"><i :class="`fi ${s.icon}`"></i><h3>{{ s.step }} · {{ s.title }}</h3><p>{{ s.description }}</p></div></div>
+      </section>
+
+      <section class="sec" v-anim="'flip'">
+        <span class="lab">07 · Industries</span>
+        <div class="chips"><span v-for="i in industries" :key="i.name">{{ i.name }}</span></div>
+      </section>
+
       <footer class="sec contact" v-anim="'clip'">
         <h2>Bend space.<br /><span class="grad">Say hello.</span></h2>
         <form action="https://formspree.io/f/mnndnjqg" method="POST">
@@ -243,5 +253,10 @@ onBeforeUnmount(() => { if (raf) cancelAnimationFrame(raf); cleanup?.(); window.
   .grid3, .grid2 { grid-template-columns: 1fr; }
   .grid4, .stats, .facts { grid-template-columns: 1fr 1fr; }
   .contact .row { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 96px 20px 72px; }
+  .hero h1 { font-size: clamp(42px, 13vw, 64px); }
+  .role { font-size: 15px; margin-top: 14px; text-shadow: 0 2px 16px rgba(4, 3, 8, 0.85); }
 }
 </style>

@@ -10,6 +10,8 @@ import {
   certificates,
   services,
   stats,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -89,6 +91,16 @@ onBeforeUnmount(() => window.removeEventListener("pointermove", onMove));
       <section class="sec" v-reveal>
         <h2 class="lab">Certificates</h2>
         <div class="grid4"><a v-for="c in certificates" :key="c.name" :href="c.link" target="_blank" class="panel cert"><img :src="c.img" :alt="c.name" /><b>{{ c.name }}</b><span>{{ c.issuer }}</span></a></div>
+      </section>
+
+      <section class="sec" v-anim="'zoom'">
+        <h2 class="lab">How it works</h2>
+        <div class="grid3"><div v-for="s in process" :key="s.step" class="panel card"><i :class="`fi ${s.icon}`"></i><h3>{{ s.step }} · {{ s.title }}</h3><p>{{ s.description }}</p></div></div>
+      </section>
+
+      <section class="sec" v-anim="'flip'">
+        <h2 class="lab">Industries</h2>
+        <div class="chips"><span v-for="i in industries" :key="i.name">{{ i.name }}</span></div>
       </section>
 
       <footer class="sec contact" v-reveal>
@@ -213,5 +225,13 @@ onBeforeUnmount(() => window.removeEventListener("pointermove", onMove));
   .facts { grid-template-columns: 1fr 1fr; }
   .contact .row { grid-template-columns: 1fr; }
   .sun { width: 240px; height: 240px; }
+}
+@media (max-width: 600px) {
+  .scene { transform: none; }
+  .sun { width: 180px; height: 180px; top: 13%; }
+  .hero { padding: 100px 20px 76px; }
+  .chrome { font-size: clamp(42px, 12vw, 58px); text-shadow: 0 3px 30px rgba(10, 4, 20, 0.7); }
+  .role { font-size: 14px; }
+  .tag { font-size: 13px; }
 }
 </style>

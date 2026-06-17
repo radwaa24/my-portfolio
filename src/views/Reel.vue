@@ -12,6 +12,8 @@ import {
   certificates,
   services,
   stats,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -159,6 +161,24 @@ onBeforeUnmount(() => {
           </div>
         </section>
 
+        <!-- 06 process -->
+        <section class="scene services">
+          <span class="no reveal-x">06 / how it works</span>
+          <div class="srow">
+            <div v-for="s in process" :key="s.step" class="scard reveal-x">
+              <i :class="`fi ${s.icon}`"></i><h3>{{ s.step }} · {{ s.title }}</h3><p>{{ s.description }}</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 07 industries -->
+        <section class="scene skills">
+          <span class="no reveal-x">07 / industries</span>
+          <div class="indwrap reveal-x">
+            <span v-for="i in industries" :key="i.name" class="pill"><i :class="`fi ${i.icon}`"></i> {{ i.name }}</span>
+          </div>
+        </section>
+
         <!-- 08 contact -->
         <section class="scene contact">
           <h2 class="reveal-x">Let's roll.</h2>
@@ -237,6 +257,9 @@ onBeforeUnmount(() => {
 .sgrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px; max-width: 820px; }
 .sgroup h4 { font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose); margin-bottom: 14px; }
 .pill { display: inline-block; margin: 0 8px 8px 0; padding: 8px 15px; border-radius: 999px; border: 1px solid rgba(251,113,133,0.3); font-size: 13.5px; }
+.indwrap { display: flex; flex-wrap: wrap; gap: 12px; max-width: 720px; }
+.indwrap .pill { margin: 0; }
+.indwrap .pill i { color: var(--rose); margin-right: 7px; }
 
 /* work */
 .work-head { width: 60vw; }

@@ -9,6 +9,8 @@ import {
   certificates,
   services,
   stats,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 const WORLD_W = 2700;
@@ -228,6 +230,16 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- contact -->
+        <div class="node card n-process" :style="{ left: '1640px', top: '1150px' }">
+          <span class="tag">// process</span>
+          <div v-for="s in process" :key="s.step" class="serv"><i :class="`fi ${s.icon}`"></i><b>{{ s.step }} · {{ s.title }}</b></div>
+        </div>
+
+        <div class="node card n-industries" :style="{ left: '600px', top: '1560px' }">
+          <span class="tag">// industries</span>
+          <div class="chips"><span v-for="i in industries" :key="i.name">{{ i.name }}</span></div>
+        </div>
+
         <div class="node card n-contact" :style="{ left: '2120px', top: '1640px' }">
           <span class="tag">// say hello</span>
           <form action="https://formspree.io/f/mnndnjqg" method="POST">

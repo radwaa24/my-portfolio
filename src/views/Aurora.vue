@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useSmoothScroll } from "../composables/useSmoothScroll.js";
 import {
-  profile, aboutFacts, socials, skillGroups, projects, certificates, services, stats,
+  profile, aboutFacts, socials, skillGroups, projects, certificates, services, stats, process, industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -142,6 +142,16 @@ onBeforeUnmount(() => { if (raf) cancelAnimationFrame(raf); cleanup?.(); });
       <section class="sec" v-anim="'zoom'">
         <span class="lab">05 · Certificates</span>
         <div class="grid4"><a v-for="c in certificates" :key="c.name" :href="c.link" target="_blank" class="cert"><img :src="c.img" :alt="c.name" /><b>{{ c.name }}</b><span>{{ c.issuer }}</span></a></div>
+      </section>
+
+      <section class="sec" v-anim="'zoom'">
+        <span class="lab">06 · How it works</span>
+        <div class="grid3"><div v-for="s in process" :key="s.step" class="card"><i :class="`fi ${s.icon}`"></i><h3>{{ s.step }} · {{ s.title }}</h3><p>{{ s.description }}</p></div></div>
+      </section>
+
+      <section class="sec" v-anim="'flip'">
+        <span class="lab">07 · Industries</span>
+        <div class="chips"><span v-for="i in industries" :key="i.name">{{ i.name }}</span></div>
       </section>
 
       <footer class="sec contact" v-anim="'clip'">

@@ -13,6 +13,8 @@ import {
   certificates,
   services,
   stats,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -245,6 +247,27 @@ onBeforeUnmount(() => {
             <span class="c-name">{{ c.name }}</span>
             <span class="c-iss">{{ c.issuer }}</span>
           </a>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head reveal-up"><span class="idx">06</span><h2>Process</h2></div>
+        <div class="cards">
+          <div v-for="s in process" :key="s.step" class="card reveal-up">
+            <i :class="`fi ${s.icon}`"></i>
+            <h3>{{ s.step }} · {{ s.title }}</h3>
+            <p>{{ s.description }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head reveal-up"><span class="idx">07</span><h2>Industries</h2></div>
+        <div class="cards">
+          <div v-for="i in industries" :key="i.name" class="card reveal-up">
+            <i :class="`fi ${i.icon}`"></i>
+            <h3>{{ i.name }}</h3>
+          </div>
         </div>
       </section>
     </div>

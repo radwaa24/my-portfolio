@@ -17,15 +17,15 @@ import threadsIcon from "../assets/threads.png";
 import instagramIcon from "../assets/instagram.png";
 
 // --- Project media -------------------------------------------------------------
-import topVideo from "../assets/topNbuy.mp4";
-import caveoVideo from "../assets/caveo.mp4";
-import meitsVideo from "../assets/meits.mp4";
-import bittrustVideo from "../assets/bittrust.mp4";
-import lemonVideo from "../assets/little-lemon.mp4";
-import heroVideo from "../assets/hero.webm";
-import ordersVideo from "../assets/orders.webm";
-import mealPrepVideo from "../assets/meal-prep.webm";
-import qwizeenVideo from "../assets/qwizeen.webm";
+import topVideo from "../assets/topNbuy-web.mp4";
+import caveoVideo from "../assets/caveo-web.mp4";
+import meitsVideo from "../assets/meits-web.mp4";
+import bittrustVideo from "../assets/bittrust-web.mp4";
+import lemonVideo from "../assets/little-lemon-web.mp4";
+import heroVideo from "../assets/hero-web.mp4";
+import ordersVideo from "../assets/orders-web.mp4";
+import mealPrepVideo from "../assets/meal-prep-web.mp4";
+import qwizeenVideo from "../assets/qwizeen-web.mp4";
 import fascanoVideo from "../assets/fascano-web.mp4";
 import reservationVideo from "../assets/reservation-web.mp4";
 
@@ -304,16 +304,57 @@ export const techStack = [
 ];
 
 // ------------------------------------------------------------------------------
+//  CONTACT — one-tap channels for the floating dock & contact sections
+// ------------------------------------------------------------------------------
+export const contact = {
+  whatsapp: "201025861677", // wa.me format (country code, no +)
+  telegram: "rudii_24",
+  email: "radwa2484@gmail.com",
+  message: "Hi Radwa, I'd like a web app for my business.",
+};
+
+export const contactLinks = {
+  whatsapp: `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(contact.message)}`,
+  telegram: `https://t.me/${contact.telegram}`,
+  email: `mailto:${contact.email}?subject=${encodeURIComponent("Web app project")}&body=${encodeURIComponent(contact.message)}`,
+};
+
+// ------------------------------------------------------------------------------
+//  DERIVED — Process / How it works [NEW SECTION]
+// ------------------------------------------------------------------------------
+export const process = [
+  { step: "01", icon: "fi-rr-search", title: "Discovery", description: "We talk through your business, goals and the problem you want solved — no tech jargon." },
+  { step: "02", icon: "fi-rr-document", title: "Plan & Quote", description: "I map the features and scope, then give you a clear quote so you know exactly what you get." },
+  { step: "03", icon: "fi-rr-paint-roller", title: "Design", description: "Clean, on-brand UI you approve before a single line of code is written." },
+  { step: "04", icon: "fi-rr-browser", title: "Build", description: "I develop your app front-to-back with regular previews — you're never left in the dark." },
+  { step: "05", icon: "fi-rr-rocket-lunch", title: "Launch & Support", description: "We go live, and I stay on hand for tweaks, training and ongoing improvements." },
+];
+
+// ------------------------------------------------------------------------------
+//  DERIVED — Industries I serve [NEW SECTION]
+// ------------------------------------------------------------------------------
+export const industries = [
+  { icon: "fi-rr-mug-hot", name: "Restaurants & Cafés" },
+  { icon: "fi-rr-bed", name: "Hotels & Hospitality" },
+  { icon: "fi-rr-shopping-cart", name: "Retail & E-Commerce" },
+  { icon: "fi-rr-calendar", name: "Booking & Reservations" },
+  { icon: "fi-rr-heart", name: "Clinics & Health" },
+  { icon: "fi-rr-scissors", name: "Salons & Beauty" },
+  { icon: "fi-rr-home", name: "Real Estate" },
+  { icon: "fi-rr-rocket-lunch", name: "Startups & SaaS" },
+];
+
+// ------------------------------------------------------------------------------
 //  Route registry — used by the floating experience switcher
 // ------------------------------------------------------------------------------
 export const experiences = [
-  { path: "/", label: "Original", tech: "Home", accent: "#f87171" },
+  { path: "/", label: "Original", tech: "Home", accent: "#f87171", light: true },
   { path: "/1", label: "FLUX · Liquid WebGL", tech: "01", accent: "#a78bfa" },
   { path: "/2", label: "ORBIT · 3D Particle Universe", tech: "02", accent: "#38bdf8" },
   { path: "/3", label: "REEL · Horizontal Cinema", tech: "03", accent: "#fb7185" },
-  { path: "/4", label: "RAW · Kinetic Brutalist", tech: "04", accent: "#facc15" },
+  { path: "/4", label: "RAW · Kinetic Brutalist", tech: "04", accent: "#facc15", light: true },
   { path: "/5", label: "ATLAS · Draggable Canvas", tech: "05", accent: "#34d399" },
-  { path: "/6", label: "PETAL · Soft Editorial", tech: "06", accent: "#ec4899" },
+  { path: "/6", label: "PETAL · Soft Editorial", tech: "06", accent: "#ec4899", light: true },
   { path: "/7", label: "HALO · Holographic", tech: "07", accent: "#c084fc" },
   { path: "/8", label: "VEIL · Spotlight Reveal", tech: "08", accent: "#cbd5e1" },
   { path: "/9", label: "LUNA · Moonlight", tech: "09", accent: "#93c5fd" },

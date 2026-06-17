@@ -11,6 +11,8 @@ import {
   certificates,
   services,
   stats,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -211,6 +213,24 @@ onBeforeUnmount(() => {
         </div>
       </section>
 
+      <section class="panel" v-anim="'zoom'">
+        <span class="ttl">Process</span>
+        <div class="grid3">
+          <div v-for="s in process" :key="s.step" class="mini">
+            <i :class="`fi ${s.icon}`"></i><h3>{{ s.step }} · {{ s.title }}</h3><p>{{ s.description }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" v-anim="'flip'">
+        <span class="ttl">Industries I serve</span>
+        <div class="grid3">
+          <div v-for="i in industries" :key="i.name" class="mini">
+            <i :class="`fi ${i.icon}`"></i><h3>{{ i.name }}</h3>
+          </div>
+        </div>
+      </section>
+
       <section class="panel contact" v-anim="'blur'">
         <span class="ttl">Transmit a message</span>
         <form action="https://formspree.io/f/mnndnjqg" method="POST">
@@ -248,6 +268,7 @@ onBeforeUnmount(() => {
 .btn.ghost { background: rgba(56,189,248,0.08); color: #eaf6ff; border-color: rgba(56,189,248,0.4); box-shadow: none; backdrop-filter: blur(8px); }
 
 .hero { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 85% 55% at 50% 45%, rgba(4, 6, 15, 0.6), transparent 72%); }
 .eyebrow { font-family: ui-monospace, monospace; letter-spacing: 0.3em; color: var(--cyan); font-size: 13px; margin-bottom: 18px; }
 .hero h1 { font-size: clamp(48px, 12vw, 150px); font-weight: 800; letter-spacing: -0.03em; line-height: 0.9; text-shadow: 0 0 60px rgba(56,189,248,0.5); }
 .role { margin-top: 16px; font-size: clamp(16px,2.2vw,22px); color: #bfe3ff; }
@@ -319,5 +340,11 @@ onBeforeUnmount(() => {
 }
 @media (max-width: 540px) {
   .grid3, .grid2, .contact .row, .facts { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .hero { padding: 96px 20px 72px; }
+  .hero h1 { font-size: clamp(42px, 13vw, 64px); }
+  .role { font-size: 15px; margin-top: 12px; text-shadow: 0 2px 16px rgba(4, 6, 15, 0.85); }
+  .tag { font-size: 14px; margin-top: 10px; text-shadow: 0 2px 16px rgba(4, 6, 15, 0.85); }
 }
 </style>

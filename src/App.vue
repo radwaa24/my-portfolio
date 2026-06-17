@@ -1,10 +1,12 @@
 <script setup>
 import { RouterView } from "vue-router";
 import ExperienceSwitcher from "./components/common/ExperienceSwitcher.vue";
+import FloatingContact from "./components/common/FloatingContact.vue";
 </script>
 
 <template>
   <ExperienceSwitcher />
+  <FloatingContact />
   <RouterView v-slot="{ Component }">
     <transition name="route" mode="out-in">
       <component :is="Component" />

@@ -13,6 +13,8 @@ import {
   services,
   stats,
   techStack,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -196,6 +198,28 @@ onBeforeUnmount(() => {
           <img :src="c.img" :alt="c.name" />
           <b>{{ c.name }}</b><span>{{ c.issuer }}</span>
         </a>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="block">
+      <div class="num">(06)</div>
+      <h2 class="head scramble skewable">HOW IT WORKS</h2>
+      <ul class="services pop">
+        <li v-for="s in process" :key="s.step">
+          <span class="s-no">{{ s.step }}</span>
+          <span class="s-title">{{ s.title }}</span>
+          <span class="s-desc">{{ s.description }}</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- INDUSTRIES -->
+    <section class="block">
+      <div class="num">(07)</div>
+      <h2 class="head scramble skewable">INDUSTRIES</h2>
+      <div class="wall pop">
+        <span v-for="i in industries" :key="i.name" class="tag">{{ i.name }}</span>
       </div>
     </section>
 

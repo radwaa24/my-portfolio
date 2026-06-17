@@ -46,15 +46,15 @@
 // Import Swiper and required modules
 import { ref } from "vue";
 
-import top from "../assets/topNbuy.mp4";
-import caveo from "../assets/caveo.mp4";
-import meits from "../assets/meits.mp4";
-import bittrust from "../assets/bittrust.mp4";
-import lemon from "../assets/little-lemon.mp4";
-import hero from "../assets/hero.webm";
-import orders from "../assets/orders.webm";
-import mealPrep from "../assets/meal-prep.webm";
-import qwizeen from "../assets/qwizeen.webm";
+import top from "../assets/topNbuy-web.mp4";
+import caveo from "../assets/caveo-web.mp4";
+import meits from "../assets/meits-web.mp4";
+import bittrust from "../assets/bittrust-web.mp4";
+import lemon from "../assets/little-lemon-web.mp4";
+import hero from "../assets/hero-web.mp4";
+import orders from "../assets/orders-web.mp4";
+import mealPrep from "../assets/meal-prep-web.mp4";
+import qwizeen from "../assets/qwizeen-web.mp4";
 import fascano from "../assets/fascano-web.mp4";
 import reservation from "../assets/reservation-web.mp4";
 import MasonryWall from "@yeger/vue-masonry-wall";

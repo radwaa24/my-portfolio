@@ -9,6 +9,8 @@ import {
   certificates,
   services,
   stats,
+  process,
+  industries,
 } from "../data/portfolio.js";
 
 useSmoothScroll();
@@ -111,6 +113,27 @@ function onLeave(e) {
         <a v-for="c in certificates" :key="c.name" :href="c.link" target="_blank" class="holo cert" @pointermove="onTilt" @pointerleave="onLeave" v-reveal>
           <img :src="c.img" :alt="c.name" /><b>{{ c.name }}</b><span>{{ c.issuer }}</span>
         </a>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2 class="sec-ttl iri" v-reveal>How it works</h2>
+      <div class="grid3">
+        <div v-for="s in process" :key="s.step" class="holo card" @pointermove="onTilt" @pointerleave="onLeave" v-reveal>
+          <i :class="`fi ${s.icon}`"></i>
+          <h3>{{ s.step }} · {{ s.title }}</h3>
+          <p>{{ s.description }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <h2 class="sec-ttl iri" v-reveal>Industries I serve</h2>
+      <div class="grid3">
+        <div v-for="i in industries" :key="i.name" class="holo card" @pointermove="onTilt" @pointerleave="onLeave" v-reveal>
+          <i :class="`fi ${i.icon}`"></i>
+          <h3>{{ i.name }}</h3>
+        </div>
       </div>
     </section>
 
