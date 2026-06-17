@@ -50,7 +50,12 @@ const currentBg = ref(bg); // Start with the first background image
 onMounted(() => {
   // Typed.js initialization
   const options = {
-    strings: ["Front-End web developer", "Specialist in Vue.js"],
+    strings: [
+      "Full-Stack Web Developer",
+      "Vue.js & Nuxt.js Specialist",
+      "React & Next.js Developer",
+      "Node.js Back-Ends",
+    ],
     typeSpeed: 50, // Speed of typing
     backSpeed: 0, // Speed of deleting
     loop: true, // Loop the animation

@@ -55,10 +55,25 @@ import hero from "../assets/hero.webm";
 import orders from "../assets/orders.webm";
 import mealPrep from "../assets/meal-prep.webm";
 import qwizeen from "../assets/qwizeen.webm";
+import fascano from "../assets/fascano-web.mp4";
+import reservation from "../assets/reservation-web.mp4";
 import MasonryWall from "@yeger/vue-masonry-wall";
 
 // Projects data
 const projects = ref([
+  {
+    title: "Fascano",
+    description:
+      "Fascano delivers all-in-one management systems for restaurants, cafés, hotels and many other business types. As their front-end developer I built a wide range of high-converting landing pages, shipped new features for the dashboard, and contributed to the web-menu project.",
+    video: fascano,
+    demo: "https://www.fascano.com/en/restaurants",
+  },
+  {
+    title: "Reservation & QR Check-in",
+    description:
+      "A full reservation platform for booking a hall or a table, generating a unique QR code that guests scan for fast, seamless on-site check-in. Built full-stack with a Nuxt front-end and a Node.js back-end.",
+    video: reservation,
+  },
   {
     title: "Qwizeen landing pages",
     description:

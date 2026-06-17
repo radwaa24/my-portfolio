@@ -6,7 +6,7 @@
         <h2
           class="libre-baskerville border-b-2 mx-auto border-red-50 text-2xl p-1 px-3 w-fit"
         >
-          Front-End web Developer (Vue.js/Nuxt.js)
+          Full-Stack Web Developer (Vue · Nuxt · Node.js)
         </h2>
       </div>
       <p
@@ -19,17 +19,17 @@
         data-aos="fade-up"
         data-aos-delay="90"
       >
-        I am a passionate and self-driven Front-End Developer with a deep
-        enthusiasm for creating intuitive and engaging user experiences. After
-        shifting my career to web development I quickly discovered that this
-        field aligns perfectly with my interests and strengths. With a
-        commitment to continuous learning, I have honed my skills in front-end
-        technologies such as Vue.js, Nuxt.js, and modern JavaScript frameworks.
-        My journey as a self-learner has shaped my problem-solving abilities and
-        my determination to stay up-to-date with the latest trends in web
-        development. I am excited about crafting clean, efficient, and scalable
-        code, and I am eager to contribute to innovative projects that make a
-        real impact.
+        I'm a Full-Stack Web Developer who made a bold leap into programming —
+        and it's the decision I'm proudest of. What began as curiosity grew into
+        a craft: I kept learning, building and growing until I could carry an
+        idea all the way from a blank screen to a deployed, real-world product.
+        Vue.js and Nuxt.js are my home turf, and I work confidently across React
+        and Next.js too. More recently I've gone full-stack, pairing Nuxt
+        front-ends with Node.js back-ends to ship complete applications. Today I
+        work as a freelancer, partnering with startups to build full web apps —
+        landing pages, dashboards and management systems, e-commerce,
+        portfolios, reservation platforms and more — always with clean, scalable
+        code and an obsessive eye for detail.
       </p>
       <!-- End Section Title -->
 
