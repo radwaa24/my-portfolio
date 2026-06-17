@@ -96,9 +96,7 @@ onBeforeUnmount(() => {
             <img :src="profile.avatar" :alt="profile.name" class="reveal-x" />
             <div>
               <p class="bio reveal-x">{{ profile.about }}</p>
-              <div class="facts reveal-x">
-                <span v-for="f in aboutFacts" :key="f.label"><i :class="`fi ${f.icon}`"></i><b>{{ f.label }}</b> {{ f.value }}</span>
-              </div>
+              <AboutFacts />
             </div>
           </div>
         </section>

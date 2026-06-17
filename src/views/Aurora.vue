@@ -104,7 +104,7 @@ onBeforeUnmount(() => { if (raf) cancelAnimationFrame(raf); cleanup?.(); });
           <img :src="profile.avatar" :alt="profile.name" />
           <div>
             <p class="bio">{{ profile.about }}</p>
-            <div class="facts"><span v-for="f in aboutFacts" :key="f.label"><i :class="`fi ${f.icon}`"></i><b>{{ f.label }}</b> {{ f.value }}</span></div>
+            <AboutFacts />
           </div>
         </div>
       </section>

@@ -142,7 +142,7 @@ onBeforeUnmount(() => {
           <img :src="profile.avatar" :alt="profile.name" />
           <div>
             <p class="bio">{{ profile.about }}</p>
-            <div class="facts"><span v-for="f in aboutFacts" :key="f.label"><i :class="`fi ${f.icon}`"></i><b>{{ f.label }}</b> {{ f.value }}</span></div>
+            <AboutFacts />
           </div>
         </div>
         <div class="stats"><div v-for="s in stats" :key="s.label" class="stat"><span class="num" v-count="{ to: s.value, suffix: s.suffix }">0</span><span class="cap">{{ s.label }}</span></div></div>

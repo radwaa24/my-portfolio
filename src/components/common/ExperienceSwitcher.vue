@@ -1,14 +1,24 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch, nextTick } from "vue";
 import { useRoute } from "vue-router";
 import { experiences } from "../../data/portfolio.js";
 
 const route = useRoute();
 const current = computed(() => route.path);
 const open = ref(false);
+const listEl = ref(null);
 const currentExp = computed(
   () => experiences.find((e) => e.path === route.path) || experiences[0]
 );
+
+// always open the mobile dropdown scrolled to the top (Home first).
+// Re-apply after a tick so it beats the browser auto-scrolling the active item into view.
+watch(open, (v) => {
+  if (!v) return;
+  const toTop = () => { if (listEl.value) listEl.value.scrollTop = 0; };
+  nextTick(toTop);
+  setTimeout(toTop, 70);
+});
 </script>
 
 <template>
@@ -29,7 +39,7 @@ const currentExp = computed(
     <div v-if="open" class="exp-backdrop" @click="open = false"></div>
 
     <!-- list: desktop dock / mobile dropdown -->
-    <div class="exp-list">
+    <div class="exp-list" ref="listEl">
       <RouterLink
         v-for="exp in experiences"
         :key="exp.path"
@@ -162,10 +172,13 @@ const currentExp = computed(
     z-index: 10000;
     flex-direction: column;
     flex-wrap: nowrap;
+    justify-content: flex-start;
     align-items: stretch;
     width: 220px;
-    max-height: 72vh;
+    max-height: 76vh;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     gap: 2px;
     padding: 8px;
     border-radius: 16px;

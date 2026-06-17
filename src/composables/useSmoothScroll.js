@@ -12,15 +12,21 @@ gsap.registerPlugin(ScrollTrigger);
 // ---------------------------------------------------------------------
 export function useSmoothScroll(opts = {}) {
   let lenis = null;
-  const reduce =
-    typeof window !== "undefined" &&
-    window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mq = (q) =>
+    typeof window !== "undefined" && window.matchMedia && window.matchMedia(q).matches;
+  // Skip Lenis on touch / small screens: it fights native momentum scrolling
+  // on phones and can stall scroll-triggered reveals. Use native scroll there.
+  const disabled =
+    mq("(prefers-reduced-motion: reduce)") || mq("(pointer: coarse)") || mq("(max-width: 768px)");
 
   const tick = (time) => lenis && lenis.raf(time * 1000);
 
   onMounted(() => {
-    if (reduce) return;
+    if (disabled) {
+      // native scroll — just make sure ScrollTrigger measures correctly
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+      return;
+    }
     lenis = new Lenis({
       duration: opts.duration ?? 1.15,
       smoothWheel: true,
