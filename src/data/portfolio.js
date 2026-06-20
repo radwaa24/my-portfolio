@@ -352,18 +352,10 @@ export const experiences = [
   { path: "/1", label: "FLUX · Liquid WebGL", tech: "01", accent: "#a78bfa" },
   { path: "/2", label: "ORBIT · 3D Particle Universe", tech: "02", accent: "#38bdf8" },
   { path: "/3", label: "REEL · Horizontal Cinema", tech: "03", accent: "#fb7185" },
-  { path: "/4", label: "RAW · Kinetic Brutalist", tech: "04", accent: "#facc15", light: true },
-  { path: "/5", label: "ATLAS · Draggable Canvas", tech: "05", accent: "#34d399" },
   { path: "/6", label: "PETAL · Soft Editorial", tech: "06", accent: "#ec4899", light: true },
-  { path: "/7", label: "HALO · Holographic", tech: "07", accent: "#c084fc" },
   { path: "/8", label: "VEIL · Spotlight Reveal", tech: "08", accent: "#cbd5e1" },
-  { path: "/9", label: "LUNA · Moonlight", tech: "09", accent: "#93c5fd" },
   { path: "/10", label: "NOVA · Hyperspace", tech: "10", accent: "#22d3ee" },
-  { path: "/11", label: "SYNTH · Retrowave", tech: "11", accent: "#ff4dd2" },
-  { path: "/12", label: "ECLIPSE · Total Eclipse", tech: "12", accent: "#fbbf24" },
-  { path: "/13", label: "AURORA · Northern Lights", tech: "13", accent: "#4ade80" },
   { path: "/14", label: "WORMHOLE · Tunnel Warp", tech: "14", accent: "#fb923c" },
-  { path: "/15", label: "ORRERY · Solar System", tech: "15", accent: "#818cf8" },
 ];
 
 export default {

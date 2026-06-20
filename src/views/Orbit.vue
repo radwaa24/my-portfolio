@@ -20,6 +20,20 @@ useSmoothScroll();
 const glCanvas = ref(null);
 const depth = ref(0);
 
+/* typewriter "coding" effect for the top-left HUD */
+const sysText = "radwa.khalaf // full stack";
+const typed = ref("");
+const typeDone = ref(false);
+let typeTimer;
+function typeWriter(i = 0) {
+  typed.value = sysText.slice(0, i);
+  if (i < sysText.length) {
+    typeTimer = setTimeout(() => typeWriter(i + 1), 65);
+  } else {
+    typeDone.value = true;
+  }
+}
+
 let renderer, scene, camera, points, geometry, mat, clock, rafId;
 const mouse = { x: 0, y: 0 };
 let progress = 0;
@@ -114,11 +128,13 @@ function onMove(e) {
 
 onMounted(() => {
   init();
+  setTimeout(() => typeWriter(0), 400);
   window.addEventListener("resize", resize);
   window.addEventListener("pointermove", onMove);
 });
 onBeforeUnmount(() => {
   if (rafId) cancelAnimationFrame(rafId);
+  clearTimeout(typeTimer);
   window.removeEventListener("resize", resize);
   window.removeEventListener("pointermove", onMove);
   geometry?.dispose();
@@ -133,16 +149,17 @@ onBeforeUnmount(() => {
 
     <!-- sci-fi HUD -->
     <div class="hud" aria-hidden="true">
-      <div class="hud-row"><span>SYS</span> radwa.khalaf // front-end</div>
+      <div class="hud-row"><span>SYS</span> <span class="typed">{{ typed }}</span><span class="caret" :class="{ blink: typeDone }"></span></div>
       <div class="hud-row"><span>DEPTH</span> {{ depth }}%</div>
       <div class="hud-bar"><div class="hud-fill" :style="{ height: depth + '%' }"></div></div>
     </div>
 
     <header class="hero">
-      <p class="eyebrow" v-reveal>// entering orbit</p>
       <h1 v-reveal="{ delay: 80 }">{{ profile.name }}</h1>
-      <p class="role" v-reveal="{ delay: 160 }">{{ profile.role }} — {{ profile.specialty }}</p>
-      <p class="tag" v-reveal="{ delay: 240 }">{{ profile.tagline }}</p>
+      <div class="hero-copy" v-reveal="{ delay: 160 }">
+        <p class="role">{{ profile.role }} — {{ profile.specialty }}</p>
+        <p class="tag">{{ profile.tagline }}</p>
+      </div>
       <div class="cta" v-reveal="{ delay: 320 }">
         <a class="btn" :href="profile.resume" target="_blank" v-magnetic="0.4">Resume</a>
         <a class="btn ghost" href="#orbit-work" v-magnetic="0.3">Explore work</a>
@@ -258,6 +275,10 @@ onBeforeUnmount(() => {
 
 .hud { position: fixed; top: 80px; left: 20px; z-index: 4; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.1em; color: rgba(56,189,248,0.8); pointer-events: none; }
 .hud-row span { color: rgba(219,234,254,0.45); margin-right: 8px; }
+.hud-row .typed { color: rgba(56,189,248,0.9); margin-right: 0; }
+.caret { display: inline-block; width: 7px; height: 13px; margin-left: 1px; background: var(--cyan); vertical-align: middle; box-shadow: 0 0 8px var(--cyan); }
+.caret.blink { animation: caret-blink 1s steps(1) infinite; }
+@keyframes caret-blink { 50% { opacity: 0; } }
 .hud-bar { width: 4px; height: 120px; background: rgba(56,189,248,0.15); margin-top: 12px; border-radius: 4px; position: relative; }
 .hud-fill { position: absolute; bottom: 0; width: 100%; background: var(--cyan); border-radius: 4px; box-shadow: 0 0 12px var(--cyan); transition: height 0.2s; }
 
@@ -267,10 +288,10 @@ onBeforeUnmount(() => {
 
 .hero { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 85% 55% at 50% 45%, rgba(4, 6, 15, 0.6), transparent 72%); }
-.eyebrow { font-family: ui-monospace, monospace; letter-spacing: 0.3em; color: var(--cyan); font-size: 13px; margin-bottom: 18px; }
 .hero h1 { font-size: clamp(48px, 12vw, 150px); font-weight: 800; letter-spacing: -0.03em; line-height: 0.9; text-shadow: 0 0 60px rgba(56,189,248,0.5); }
-.role { margin-top: 16px; font-size: clamp(16px,2.2vw,22px); color: #bfe3ff; }
-.tag { margin-top: 10px; color: rgba(219,234,254,0.6); }
+.hero-copy { margin-top: 20px; padding: 16px 28px; border-radius: 18px; background: rgba(4,6,15,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(56,189,248,0.18); box-shadow: 0 20px 60px -30px rgba(56,189,248,0.5); }
+.role { font-size: clamp(16px,2.2vw,22px); color: #eaf6ff; }
+.tag { margin-top: 8px; color: rgba(219,234,254,0.8); }
 .cta { display: flex; gap: 14px; margin-top: 30px; }
 
 .stream { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 40px 24px 120px; display: flex; flex-direction: column; gap: 28px; }

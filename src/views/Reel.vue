@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, watch, nextTick } from "vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useSmoothScroll } from "../composables/useSmoothScroll.js";
@@ -25,7 +25,63 @@ const progress = ref(0);
 
 let ctx, mm;
 
+/* ---------------- switchable soft background ---------------- */
+const bgMode = ref(
+  (typeof localStorage !== "undefined" && localStorage.getItem("reelBg")) || "pink"
+);
+const codeCanvas = ref(null);
+let codeRaf = null, codeCtx = null, cols = 0, drops = [], cw = 0, ch = 0;
+const FS = 16;
+const glyphs = "01{}[]()<>/=+*;:.#$&|console.log()=>const let function async await return".split("");
+
+function resizeCode() {
+  const c = codeCanvas.value;
+  if (!c) return;
+  cw = c.width = window.innerWidth;
+  ch = c.height = window.innerHeight;
+  cols = Math.floor(cw / FS);
+  drops = Array.from({ length: cols }, () => (Math.random() * ch) / FS);
+}
+function drawCode() {
+  if (!codeCtx) return;
+  codeCtx.fillStyle = "rgba(14,10,13,0.10)";
+  codeCtx.fillRect(0, 0, cw, ch);
+  codeCtx.font = `${FS}px ui-monospace, monospace`;
+  for (let i = 0; i < cols; i++) {
+    const g = glyphs[Math.floor(Math.random() * glyphs.length)];
+    const x = i * FS, y = drops[i] * FS;
+    codeCtx.fillStyle = Math.random() > 0.92 ? "rgba(251,233,236,0.75)" : "rgba(251,113,133,0.5)";
+    codeCtx.fillText(g, x, y);
+    if (y > ch && Math.random() > 0.975) drops[i] = 0;
+    drops[i] += 0.5;
+  }
+  codeRaf = requestAnimationFrame(drawCode);
+}
+function startCode() {
+  nextTick(() => {
+    const c = codeCanvas.value;
+    if (!c) return;
+    codeCtx = c.getContext("2d");
+    resizeCode();
+    window.addEventListener("resize", resizeCode);
+    drawCode();
+  });
+}
+function stopCode() {
+  if (codeRaf) cancelAnimationFrame(codeRaf);
+  codeRaf = null;
+  codeCtx = null;
+  window.removeEventListener("resize", resizeCode);
+}
+function toggleBg() {
+  bgMode.value = bgMode.value === "pink" ? "code" : "pink";
+  if (typeof localStorage !== "undefined") localStorage.setItem("reelBg", bgMode.value);
+}
+watch(bgMode, (v) => (v === "code" ? startCode() : stopCode()));
+
 onMounted(() => {
+  if (bgMode.value === "code") startCode();
+
   ctx = gsap.context(() => {
     mm = gsap.matchMedia();
 
@@ -67,6 +123,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
+  stopCode();
   mm?.revert();
   ctx?.revert();
 });
@@ -74,6 +131,21 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="reel" ref="root">
+    <!-- soft animated background (switchable) -->
+    <div class="bg-layer" :class="`bg-${bgMode}`" aria-hidden="true">
+      <template v-if="bgMode === 'pink'">
+        <span class="blob b1"></span>
+        <span class="blob b2"></span>
+        <span class="blob b3"></span>
+      </template>
+      <canvas v-else ref="codeCanvas" class="code-canvas"></canvas>
+    </div>
+
+    <button class="theme-toggle" type="button" @click="toggleBg">
+      <span class="dot" :class="bgMode"></span>
+      {{ bgMode === 'pink' ? 'Try code theme' : 'Try pink theme' }}
+    </button>
+
     <div class="rail"><div class="rail-fill" :style="{ width: progress * 100 + '%' }"></div></div>
 
     <div class="pin" ref="pinWrap">
@@ -200,15 +272,38 @@ onBeforeUnmount(() => {
 .reel {
   --rose: #fb7185;
   --bg: #0e0a0d;
+  position: relative;
   background: var(--bg);
   color: #fbe9ec;
   font-family: "Poppins", system-ui, sans-serif;
   overflow-x: hidden;
 }
+
+/* soft animated background */
+.bg-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.code-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.55; }
+.blob { position: absolute; border-radius: 50%; filter: blur(95px); opacity: 0.42; mix-blend-mode: screen; will-change: transform; }
+.b1 { width: 48vw; height: 48vw; background: #fb7185; top: -12%; left: -8%; animation: drift1 19s ease-in-out infinite; }
+.b2 { width: 40vw; height: 40vw; background: #f9a8d4; bottom: -14%; right: -6%; animation: drift2 23s ease-in-out infinite; }
+.b3 { width: 32vw; height: 32vw; background: #f0abfc; top: 28%; left: 42%; animation: drift3 27s ease-in-out infinite; }
+@keyframes drift1 { 50% { transform: translate(18vw, 12vh) scale(1.15); } }
+@keyframes drift2 { 50% { transform: translate(-15vw, -11vh) scale(1.1); } }
+@keyframes drift3 { 50% { transform: translate(-20vw, 16vh) scale(0.9); } }
+@media (prefers-reduced-motion: reduce) {
+  .blob { animation: none; }
+}
+
+/* theme toggle */
+.theme-toggle { position: fixed; bottom: 22px; right: 22px; z-index: 9999; display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 999px; border: 1px solid rgba(251,113,133,0.4); background: rgba(14,10,13,0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fbe9ec; font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: 0.04em; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+.theme-toggle:hover { transform: translateY(-2px); box-shadow: 0 0 26px -6px var(--rose); border-color: var(--rose); }
+.theme-toggle .dot { width: 9px; height: 9px; border-radius: 50%; }
+.theme-toggle .dot.pink { background: #f9a8d4; box-shadow: 0 0 10px #f9a8d4; }
+.theme-toggle .dot.code { background: var(--rose); box-shadow: 0 0 10px var(--rose); }
+
 .rail { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 9998; background: rgba(251,113,133,0.15); }
 .rail-fill { height: 100%; background: var(--rose); box-shadow: 0 0 12px var(--rose); }
 
-.pin { height: 100vh; overflow: hidden; }
+.pin { position: relative; z-index: 1; height: 100vh; overflow: hidden; }
 .track { display: flex; height: 100vh; align-items: stretch; will-change: transform; }
 
 .scene { flex: 0 0 auto; height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 7vw; position: relative; }
