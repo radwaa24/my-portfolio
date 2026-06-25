@@ -21,8 +21,45 @@ useSmoothScroll();
 
 const root = ref(null);
 const glCanvas = ref(null);
-const l1 = profile.firstName.split("");
-const l2 = profile.lastName.split("");
+const fullName = `${profile.firstName} ${profile.lastName}`;
+
+/* ---- code texture clipped into the name letters ---- */
+const xml = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const codeLines = [
+  { t: "const flow = () => {", c: "#f472b6" },
+  { t: "  return Template()", c: "#fda4af" },
+  { t: "}", c: "#e5e7eb" },
+  { t: "async function build() {", c: "#f472b6" },
+  { t: "  await deploy(app)", c: "#f9a8d4" },
+  { t: "  const res = api.get()", c: "#fbcfe8" },
+  { t: "}", c: "#e5e7eb" },
+  { t: ".hero { display: grid }", c: "#fbcfe8" },
+  { t: "v-for='p in projects'", c: "#f9a8d4" },
+  { t: "export default { ui }", c: "#f472b6" },
+  { t: "import { ref } from vue", c: "#fda4af" },
+  { t: "git push origin main", c: "#9ca3af" },
+  { t: "npm run dev --open", c: "#e5e7eb" },
+  { t: "useState(() => 0)", c: "#fda4af" },
+  { t: "if (ready) render()", c: "#f472b6" },
+  { t: "{ ...props, ready }", c: "#f9a8d4" },
+  { t: "router.push('/work')", c: "#fbcfe8" },
+  { t: "height: 100vh;", c: "#fbcfe8" },
+  { t: "transition: all .3s", c: "#9ca3af" },
+  { t: "onMounted(() => init())", c: "#fda4af" },
+  { t: "data.map(x => x.id)", c: "#f9a8d4" },
+  { t: "background: #ec4899", c: "#f472b6" },
+];
+const codeSvg =
+  `<svg xmlns='http://www.w3.org/2000/svg' width='460' height='440' viewBox='0 0 460 440'>` +
+  `<rect width='460' height='440' fill='#0a0d14'/>` +
+  `<g font-family='ui-monospace,Menlo,Consolas,monospace' font-size='17' font-weight='600'>` +
+  codeLines.map((l, i) => `<text x='10' y='${18 + i * 20}' fill='${l.c}'>${xml(l.t)}</text>`).join("") +
+  `</g></svg>`;
+const codeBg = `url("data:image/svg+xml,${encodeURIComponent(codeSvg)}")`;
+
+/* only GitHub + LinkedIn flank the Resume button in the hero */
+const gh = socials.find((s) => s.name === "GitHub");
+const li = socials.find((s) => s.name === "LinkedIn");
 
 /* ---------------- WebGL fluid shader ---------------- */
 let renderer, scene, camera, material, clock, rafId;
@@ -45,29 +82,86 @@ float noise(vec2 p){
 }
 float fbm(vec2 p){
   float v = 0.0, a = 0.5;
-  for(int i=0;i<4;i++){ v += a*noise(p); p *= 2.0; a *= 0.5; }
+  for(int i=0;i<5;i++){ v += a*noise(p); p = p*2.0 + 17.3; a *= 0.5; }
   return v;
 }
+mat2 rot(float a){ float s=sin(a), c=cos(a); return mat2(c,-s,s,c); }
+
+// one soft 5-petal flower in local space; returns coverage 0..1 and core mask
+float flower(vec2 p, float sc, out float core){
+  p /= sc;
+  float r = length(p);
+  float a = atan(p.y, p.x);
+  float petal = 0.5 + 0.5*abs(cos(a*2.5));   // 5 lobes
+  float edge  = petal*0.92;
+  float body  = smoothstep(edge, edge-0.22, r);
+  core = smoothstep(0.30, 0.0, r);
+  return clamp(body + core*0.7, 0.0, 1.0);
+}
+
+// scattered flowers — dense, even-sized, gently floating
+float flowers(vec2 uv, float t, out float coreOut){
+  float acc = 0.0; coreOut = 0.0;
+  vec2 g  = uv * 2.4;
+  vec2 id = floor(g);
+  vec2 f  = fract(g) - 0.5;
+  for(int y=-1;y<=1;y++){
+    for(int x=-1;x<=1;x++){
+      vec2 o = vec2(float(x), float(y));
+      float h  = hash(id + o);
+      if(h < 0.45) continue;                 // most cells bloom -> denser field
+      float h2 = hash(id + o + 31.4);
+      // gentle floating sway so each flower drifts on its own little path
+      vec2 sway = vec2(sin(t*1.2 + h*6.2831), cos(t*1.0 + h2*6.2831)) * 0.13;
+      vec2 p = f - (o + (vec2(h, h2)-0.5)*0.5 + sway);
+      p = rot(t*0.35*(h-0.5) + h2*6.2831) * p;
+      float c;
+      float fv = flower(p, 0.17 + 0.04*h2, c);  // near-uniform size
+      if(fv > acc){ acc = fv; coreOut = c; }
+    }
+  }
+  return acc;
+}
+
 void main(){
   vec2 uv = (gl_FragCoord.xy*2.0 - u_res) / min(u_res.x, u_res.y);
   vec2 m  = (u_mouse - 0.5) * 2.0;
-  float t = u_time * 0.10;
-  vec2 q = vec2(fbm(uv + t), fbm(uv + vec2(5.2,1.3) - t));
-  vec2 r = vec2(fbm(uv + 3.0*q + vec2(1.7,9.2) + m*0.40),
-                fbm(uv + 3.0*q + vec2(8.3,2.8) - t));
-  float f = fbm(uv + 3.0*r);
+  float t = u_time * 0.16;
 
-  // light pinky / white / gray palette
-  vec3 white = vec3(1.000, 0.992, 0.996);
-  vec3 pink  = vec3(0.984, 0.835, 0.902);
-  vec3 rose  = vec3(0.961, 0.733, 0.831);
-  vec3 gray  = vec3(0.906, 0.890, 0.910);
+  // ---- silky flowing waves (domain-warped sine ribbons) ----
+  vec2 wp = uv + m*0.10;
+  float warp = fbm(wp*1.4 + vec2(0.0, t*0.6));
+  float w1 = sin(wp.x*2.2 + t*1.1 + warp*3.0);
+  float w2 = sin(wp.x*3.6 - t*0.7 + wp.y*1.8 + warp*2.0);
+  float wave = 0.5 + 0.26*w1 + 0.24*w2;                 // 0..1 flowing bands
+  float band = fbm(vec2(wp.x*1.1 + t*0.5, wp.y*1.7 - t*0.4));
+  float shimmer = fbm(uv*3.2 + vec2(t, -t));
 
-  vec3 col = mix(white, pink, smoothstep(0.10, 0.72, f));
-  col = mix(col, rose, smoothstep(0.45, 0.95, length(r)) * 0.55);
-  col = mix(col, gray, smoothstep(0.30, 0.85, length(q)) * 0.30);
-  float vig = smoothstep(1.8, 0.15, length(uv));
-  col *= 0.95 + 0.05 * vig;
+  // ---- pinky / white palette ----
+  vec3 white = vec3(1.000, 0.984, 0.992);
+  vec3 pink  = vec3(0.992, 0.886, 0.937);
+  vec3 rose  = vec3(0.973, 0.776, 0.863);
+  vec3 blush = vec3(0.949, 0.671, 0.808);
+
+  vec3 col = mix(white, pink, smoothstep(-1.1, 1.1, uv.y));  // soft vertical wash
+  col = mix(col, rose,  smoothstep(0.34, 0.86, wave) * 0.60);
+  col = mix(col, blush, smoothstep(0.58, 0.96, band) * 0.32);
+  col = mix(col, white, smoothstep(0.30, 0.92, shimmer) * 0.28);
+
+  // ---- flowers riding the waves ----
+  vec2 fuv = uv;
+  fuv.y += u_time * 0.035;                 // gentle upward drift
+  fuv.x += (wave - 0.5) * 0.35;            // softly pushed by the waves
+  fuv += m * 0.08;                         // react to pointer
+  float core;
+  float fl = flowers(fuv, u_time * 0.45, core);
+  vec3 petalCol = mix(vec3(1.0, 0.985, 0.992), rose, 0.26);
+  col = mix(col, petalCol, fl * 0.58);     // light translucent petals
+  col = mix(col, blush, core * 0.55);      // pink flower centers
+  col += fl * 0.06 * vec3(1.0, 0.96, 0.98);// soft rim glow
+
+  float vig = smoothstep(1.9, 0.10, length(uv));
+  col *= 0.93 + 0.07 * vig;
   gl_FragColor = vec4(col, 1.0);
 }`;
 
@@ -115,15 +209,15 @@ onMounted(() => {
   window.addEventListener("pointermove", onMove);
 
   ctx = gsap.context(() => {
-    gsap.from(".hero-title .ch", {
-      yPercent: 130,
-      duration: 1.1,
+    gsap.from(".hero-title .ttext", {
+      yPercent: 40,
+      opacity: 0,
+      duration: 1.2,
       ease: "expo.out",
-      stagger: 0.04,
       delay: 0.2,
     });
-    gsap.from([".hero-sub", ".hero-cta", ".hero-meta"], {
-      y: 30, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.12, delay: 0.7,
+    gsap.from([".hero-stack", ".hero-sub", ".hero-meta"], {
+      y: 30, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.12, delay: 0.6,
     });
     gsap.utils.toArray(".reveal-up").forEach((el) => {
       gsap.from(el, {
@@ -159,20 +253,37 @@ onBeforeUnmount(() => {
 
     <!-- HERO over the live shader -->
     <header class="hero">
-      <p class="hero-tagline">{{ profile.specialty }}</p>
+      <p class="hero-tagline">{{ profile.heroTagline }}</p>
       <h1 class="hero-title">
-        <span class="line"><span v-for="(c, i) in l1" :key="'a' + i" class="ch">{{ c }}</span></span>
-        <span class="line"><span v-for="(c, i) in l2" :key="'b' + i" class="ch">{{ c }}</span></span>
+        <span class="ttext" :style="{ '--code': codeBg }">{{ fullName }}</span>
       </h1>
-      <p class="hero-sub">{{ profile.tagline }}</p>
-      <div class="hero-cta">
-        <a class="btn" :href="profile.resume" target="_blank" v-magnetic="0.4">Resume</a>
-        <a class="btn ghost" href="#flux-work" v-magnetic="0.3">Selected work</a>
+      <div class="hero-stack">
+        <span v-for="t in profile.stack" :key="t">{{ t }}</span>
       </div>
+      <p class="hero-sub">A front-end specialist fluent in Vue &amp; React, I craft fluid, pixel-perfect interfaces — and ship complete full-stack apps built in Nuxt.</p>
       <div class="hero-meta">
-        <a v-for="s in socials" :key="s.name" :href="s.url" target="_blank">{{ s.name }}</a>
+        <a :href="gh.url" target="_blank" :aria-label="gh.name">
+          <i :class="`fi ${gh.brand}`"></i><span>{{ gh.name }}</span>
+        </a>
+        <a class="resume-btn" :href="profile.resume" target="_blank" aria-label="Resume" v-magnetic="0.4">
+          <i class="fi fi-rr-document"></i><span>Resume</span>
+        </a>
+        <a :href="li.url" target="_blank" :aria-label="li.name">
+          <i :class="`fi ${li.brand}`"></i><span>{{ li.name }}</span>
+        </a>
       </div>
-      <div class="scroll-hint">scroll ↓</div>
+      <div class="scroll-hint" aria-hidden="true">
+        <span class="scroll-line"></span>
+        <span class="scroll-flower">
+          <svg viewBox="0 0 48 48">
+            <g class="petals">
+              <ellipse v-for="n in 5" :key="n" cx="24" cy="13" rx="6.5" ry="11"
+                :transform="`rotate(${(n - 1) * 72} 24 24)`" />
+            </g>
+            <circle class="fcore" cx="24" cy="24" r="6" />
+          </svg>
+        </span>
+      </div>
     </header>
 
     <!-- CONTENT (faint living shader behind translucent dark) -->
@@ -198,12 +309,14 @@ onBeforeUnmount(() => {
 
       <section class="sec">
         <div class="sec-head reveal-up"><span class="idx">02</span><h2>Services</h2></div>
-        <div class="cards">
-          <div v-for="srv in services" :key="srv.title" class="card reveal-up">
-            <i :class="`fi ${srv.icon}`"></i>
+        <div class="svc-grid">
+          <article v-for="(srv, i) in services" :key="srv.title" class="svc reveal-up">
+            <span class="svc-num">{{ String(i + 1).padStart(2, "0") }}</span>
+            <span class="svc-orb"><i :class="`fi ${srv.icon}`"></i></span>
             <h3>{{ srv.title }}</h3>
             <p>{{ srv.description }}</p>
-          </div>
+            <span class="svc-line"></span>
+          </article>
         </div>
       </section>
 
@@ -267,22 +380,30 @@ onBeforeUnmount(() => {
 
       <section class="sec">
         <div class="sec-head reveal-up"><span class="idx">06</span><h2>Process</h2></div>
-        <div class="cards">
-          <div v-for="s in process" :key="s.step" class="card reveal-up">
-            <i :class="`fi ${s.icon}`"></i>
-            <h3>{{ s.step }} · {{ s.title }}</h3>
-            <p>{{ s.description }}</p>
-          </div>
-        </div>
+        <ol class="proc">
+          <li v-for="s in process" :key="s.step" class="proc-step reveal-up">
+            <span class="proc-rail"><span class="proc-node">{{ s.step }}</span></span>
+            <div class="proc-body">
+              <span class="proc-ic"><i :class="`fi ${s.icon}`"></i></span>
+              <h3>{{ s.title }}</h3>
+              <p>{{ s.description }}</p>
+            </div>
+          </li>
+        </ol>
       </section>
 
       <section class="sec">
         <div class="sec-head reveal-up"><span class="idx">07</span><h2>Industries</h2></div>
-        <div class="cards">
-          <div v-for="i in industries" :key="i.name" class="card reveal-up">
-            <i :class="`fi ${i.icon}`"></i>
-            <h3>{{ i.name }}</h3>
-          </div>
+        <p class="inds-lead reveal-up">Trusted across the sectors I build for every day.</p>
+        <div class="inds reveal-up">
+          <span
+            v-for="(ind, i) in industries"
+            :key="ind.name"
+            class="ind"
+            :style="{ '--d': i * 0.25 + 's' }"
+          >
+            <i :class="`fi ${ind.icon}`"></i>{{ ind.name }}
+          </span>
         </div>
       </section>
     </div>
@@ -326,18 +447,64 @@ onBeforeUnmount(() => {
 .gl { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; }
 
 /* hero */
-.hero { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
-.hero-tagline { text-transform: uppercase; letter-spacing: 0.4em; font-size: 13px; color: #b03a6e; margin-bottom: 18px; opacity: 0.9; text-shadow: 0 1px 14px rgba(255,255,255,0.8); }
-.hero-title { font-family: "Libre Baskerville", serif; font-weight: 700; line-height: 0.86; letter-spacing: -0.02em; color: #3a2730; text-shadow: 0 6px 36px rgba(255,255,255,0.55); }
-.hero-title .line { display: block; overflow: hidden; }
-.hero-title .ch { display: inline-block; font-size: clamp(64px, 16vw, 220px); }
-.hero-sub { margin-top: 24px; font-size: clamp(16px, 2vw, 21px); color: #5a4751; max-width: 30ch; text-shadow: 0 1px 12px rgba(255,255,255,0.7); }
-.hero-cta { display: flex; gap: 14px; margin-top: 32px; }
-.hero-meta { display: flex; gap: 20px; margin-top: 30px; }
-.hero-meta a { color: rgba(74,58,68,0.75); text-decoration: none; font-size: 14px; transition: color 0.2s; text-shadow: 0 1px 10px rgba(255,255,255,0.7); }
-.hero-meta a:hover { color: var(--rose); }
-.scroll-hint { position: absolute; bottom: 26px; font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(74,58,68,0.65); animation: bob 2s ease-in-out infinite; }
-@keyframes bob { 50% { transform: translateY(8px); } }
+.hero { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 96px 24px 110px; }
+.hero-tagline { text-transform: uppercase; letter-spacing: 0.4em; font-size: 12px; color: #b03a6e; margin-bottom: 22px; opacity: 0.9; text-shadow: 0 1px 14px rgba(255,255,255,0.8); }
+.hero-title { font-family: "Fraunces", "Libre Baskerville", serif; font-weight: 700; line-height: 1; letter-spacing: -0.02em; filter: drop-shadow(0 4px 22px rgba(255,255,255,0.7)) drop-shadow(0 2px 3px rgba(10,13,20,0.35)); }
+.hero-title .ttext {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: clamp(34px, 9vw, 124px);
+  font-variation-settings: "opsz" 144;
+  color: #0a0d14;                 /* fallback: solid black name */
+  background-color: #0a0d14;
+  background-image: var(--code);
+  background-repeat: repeat;
+  background-size: auto 54px;     /* tiny, dense, unreadable code */
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  will-change: background-position;
+  animation: codeScroll 9s linear infinite;
+}
+@keyframes codeScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 -216px; }   /* 4 × 54px, scrolls bottom → top */
+}
+.hero-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 22px; }
+.hero-stack span { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: #b03a6e; padding: 5px 13px; border-radius: 999px; background: rgba(255,255,255,0.62); border: 1px solid rgba(236,72,153,0.22); backdrop-filter: blur(6px); box-shadow: 0 4px 14px -8px rgba(236,72,153,0.4); }
+.hero-sub { margin-top: 22px; font-size: clamp(15px, 1.7vw, 19px); line-height: 1.65; color: #5a4751; max-width: 52ch; text-shadow: 0 1px 12px rgba(255,255,255,0.7); }
+.hero-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px; margin-top: 36px; }
+.hero-meta a { display: inline-flex; align-items: center; gap: 8px; color: rgba(74,58,68,0.8); text-decoration: none; font-size: 14px; font-weight: 600; padding: 9px 16px 9px 11px; border-radius: 999px; background: rgba(255,255,255,0.6); border: 1px solid rgba(236,72,153,0.2); backdrop-filter: blur(6px); box-shadow: 0 4px 14px -8px rgba(236,72,153,0.4); transition: color 0.25s, background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+.hero-meta a i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(236,72,153,0.12); color: var(--rose); font-size: 14px; transition: background 0.25s, color 0.25s; }
+.hero-meta a:not(.resume-btn):hover { transform: translateY(-3px); color: #fff; background: linear-gradient(135deg, var(--rose-2), var(--rose)); border-color: transparent; box-shadow: 0 14px 30px -14px rgba(236,72,153,0.7); }
+.hero-meta a:not(.resume-btn):hover i { background: rgba(255,255,255,0.22); color: #fff; }
+
+/* unique, animated Resume button between the two social links */
+.hero-meta .resume-btn { position: relative; overflow: hidden; color: #fff; font-size: 15px; padding: 12px 24px 12px 14px; border: 1px solid transparent; background: linear-gradient(120deg, var(--rose-2), var(--rose) 55%, #db2777); background-size: 200% 100%; box-shadow: 0 12px 30px -10px rgba(236,72,153,0.7); animation: resumeGlow 3s ease-in-out infinite, resumeFlow 6s linear infinite; }
+.hero-meta .resume-btn i { background: rgba(255,255,255,0.22); color: #fff; }
+/* sweeping shine */
+.hero-meta .resume-btn::before { content: ""; position: absolute; top: 0; left: -60%; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent); transform: skewX(-20deg); animation: resumeShine 3.4s ease-in-out infinite; }
+.hero-meta .resume-btn span { position: relative; z-index: 1; }
+.hero-meta .resume-btn:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 20px 44px -12px rgba(236,72,153,0.85); }
+.hero-meta .resume-btn:hover i { animation: resumeBob 0.7s ease-in-out infinite; }
+@keyframes resumeGlow { 50% { box-shadow: 0 12px 38px -8px rgba(236,72,153,0.95); } }
+@keyframes resumeFlow { to { background-position: 200% 0; } }
+@keyframes resumeShine { 0% { left: -60%; } 55%, 100% { left: 130%; } }
+@keyframes resumeBob { 50% { transform: translateY(-3px); } }
+.scroll-hint { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.scroll-line { width: 1px; height: 34px; background: linear-gradient(to bottom, transparent, var(--rose)); transform-origin: top; animation: scrollPulse 1.9s ease-in-out infinite; }
+@keyframes scrollPulse { 0%, 100% { transform: scaleY(0.35); opacity: 0.4; } 50% { transform: scaleY(1); opacity: 1; } }
+.scroll-flower { display: block; width: 32px; height: 32px; transform-origin: center; will-change: transform; animation: scrollBob 1.9s ease-in-out infinite; }
+.scroll-flower svg { display: block; width: 100%; height: 100%; transform-origin: 50% 50%; will-change: transform; animation: scrollSpin 8s linear infinite; filter: drop-shadow(0 4px 10px rgba(236,72,153,0.45)); }
+.scroll-flower .petals { transform-origin: 24px 24px; animation: scrollBloom 1.9s ease-in-out infinite; }
+.scroll-flower .petals ellipse { fill: var(--rose-2); }
+.scroll-flower .petals ellipse:nth-child(even) { fill: var(--rose); }
+.scroll-flower .fcore { fill: #fff; }
+@keyframes scrollBob { 0%, 100% { transform: translateY(-3px); } 50% { transform: translateY(8px); } }
+@keyframes scrollSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes scrollBloom { 0%, 100% { transform: scale(0.85); } 50% { transform: scale(1.08); } }
 
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; border-radius: 999px; background: var(--rose); color: #fff; font-weight: 600; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-size: 15px; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 10px 36px -10px rgba(236,72,153,0.6); }
 .btn:hover { box-shadow: 0 16px 46px -8px rgba(236,72,153,0.75); }
@@ -362,12 +529,41 @@ onBeforeUnmount(() => {
 .num { display: block; font-size: clamp(32px,4vw,52px); font-weight: 800; color: var(--rose); }
 .lbl { font-size: 13px; color: var(--muted); }
 
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.card { padding: 30px; border-radius: 18px; border: 1px solid var(--line); background: rgba(255,255,255,0.6); transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
-.card:hover { transform: translateY(-6px); border-color: rgba(236,72,153,0.45); box-shadow: 0 18px 40px -20px rgba(236,72,153,0.45); }
-.card i { font-size: 26px; color: var(--rose); }
-.card h3 { font-size: 19px; font-weight: 700; margin: 14px 0 8px; color: #3a2730; }
-.card p { font-size: 14px; line-height: 1.6; color: var(--muted); }
+/* ── 02 Services — gradient-orb feature cards ───────────────── */
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.svc { position: relative; overflow: hidden; padding: 30px 28px 34px; border-radius: 22px; border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.5)); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s, box-shadow 0.4s; }
+.svc:hover { transform: translateY(-8px); border-color: rgba(236,72,153,0.4); box-shadow: 0 26px 50px -26px rgba(236,72,153,0.55); }
+.svc-num { position: absolute; top: 20px; right: 24px; font-family: "Fraunces", serif; font-size: 30px; font-weight: 500; color: rgba(236,72,153,0.18); transition: color 0.4s; }
+.svc:hover .svc-num { color: rgba(236,72,153,0.4); }
+.svc-orb { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 18px; background: linear-gradient(135deg, var(--rose-2), var(--rose)); color: #fff; font-size: 24px; box-shadow: 0 12px 28px -12px rgba(236,72,153,0.7); transition: transform 0.4s; }
+.svc:hover .svc-orb { transform: scale(1.08) rotate(-4deg); }
+.svc h3 { font-family: "Fraunces", serif; font-size: 21px; font-weight: 600; margin: 20px 0 10px; color: #3a2730; }
+.svc p { font-size: 14px; line-height: 1.7; color: var(--muted); }
+.svc-line { display: block; height: 2px; width: 28px; margin-top: 18px; border-radius: 2px; background: linear-gradient(90deg, var(--rose), transparent); transition: width 0.4s cubic-bezier(0.16,1,0.3,1); }
+.svc:hover .svc-line { width: 70px; }
+
+/* ── 06 Process — fluid vertical timeline ───────────────────── */
+.proc { list-style: none; position: relative; max-width: 720px; margin: 0 auto; }
+.proc-step { position: relative; display: grid; grid-template-columns: 64px 1fr; gap: 22px; padding-bottom: 38px; }
+.proc-step:last-child { padding-bottom: 0; }
+.proc-rail { position: relative; display: flex; justify-content: center; }
+.proc-rail::before { content: ""; position: absolute; top: 56px; bottom: -38px; width: 2px; background: linear-gradient(to bottom, var(--rose), rgba(236,72,153,0.12)); }
+.proc-step:last-child .proc-rail::before { display: none; }
+.proc-node { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-family: "Fraunces", serif; font-size: 19px; font-weight: 600; color: var(--rose); background: rgba(255,255,255,0.85); border: 2px solid rgba(236,72,153,0.4); box-shadow: 0 10px 26px -14px rgba(236,72,153,0.6); transition: transform 0.35s, background 0.35s, color 0.35s; z-index: 1; }
+.proc-step:hover .proc-node { transform: scale(1.1); background: linear-gradient(135deg, var(--rose-2), var(--rose)); color: #fff; }
+.proc-body { padding: 6px 4px; }
+.proc-ic { display: inline-flex; align-items: center; gap: 8px; color: var(--rose); font-size: 18px; }
+.proc-body h3 { font-family: "Fraunces", serif; font-size: 20px; font-weight: 600; margin: 8px 0 8px; color: #3a2730; }
+.proc-body p { font-size: 14.5px; line-height: 1.7; color: var(--muted); }
+
+/* ── 07 Industries — floating pill cloud ────────────────────── */
+.inds-lead { text-align: center; color: var(--muted); font-size: 15px; margin-bottom: 34px; }
+.inds { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.ind { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: #5a4751; background: rgba(255,255,255,0.6); border: 1px solid var(--line); animation: indFloat 5s ease-in-out infinite; animation-delay: var(--d); transition: transform 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, background 0.3s; }
+.ind i { font-size: 17px; color: var(--rose); transition: color 0.3s; }
+.ind:hover { transform: translateY(-4px) scale(1.04); color: #fff; background: linear-gradient(135deg, var(--rose-2), var(--rose)); border-color: transparent; box-shadow: 0 16px 34px -16px rgba(236,72,153,0.7); }
+.ind:hover i { color: #fff; }
+@keyframes indFloat { 50% { transform: translateY(-6px); } }
 
 /* skills — radial dials */
 .skills { display: grid; grid-template-columns: 1fr; gap: 44px; }
@@ -414,13 +610,16 @@ onBeforeUnmount(() => {
 
 @media (max-width: 860px) {
   .about { grid-template-columns: 1fr; }
-  .cards { grid-template-columns: 1fr 1fr; }
+  .svc-grid { grid-template-columns: 1fr 1fr; }
   .skills { grid-template-columns: 1fr; }
   .proj, .proj:nth-child(even) .proj-media { grid-template-columns: 1fr; order: 0; }
   .stats { grid-template-columns: 1fr 1fr; }
   .certs { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 540px) {
-  .cards, .form .row { grid-template-columns: 1fr; }
+  .svc-grid, .form .row { grid-template-columns: 1fr; }
+  .proc-step { grid-template-columns: 48px 1fr; gap: 16px; }
+  .proc-node { width: 46px; height: 46px; font-size: 16px; }
+  .proc-rail::before { top: 48px; }
 }
 </style>

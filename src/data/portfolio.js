@@ -55,10 +55,15 @@ export const profile = {
   ],
   tagline:
     "I build complete web apps for startups — from pixel-perfect front-ends to Node-powered back-ends.",
+  // canonical hero copy — shared by every theme so all heroes say the same thing
+  heroTagline: "Front-End Specialist · Full-Stack Developer",
+  heroIntro:
+    "I specialize in front-end engineering — building fluid, pixel-perfect interfaces in Vue & Nuxt — and take projects end-to-end with dependable Node.js back-ends.",
+  stack: ["Vue", "Nuxt", "React", "Next", "Node"],
   avatar,
   backgrounds: [bgA, bgB],
   resume:
-    "https://drive.google.com/file/d/1GQTnmwh2rrj60lXYa-G_Tsn5QyVN5VKy/view?usp=sharing",
+    "https://drive.google.com/file/d/1Dwjj7FfYsGiMMRk7-Gk5_rOJx1v4H567/view?usp=sharing",
   about:
     "I'm a Full-Stack Web Developer who made a bold leap into programming — and it's the decision I'm proudest of. What began as curiosity grew into a craft: I kept learning, building and growing until I could carry an idea all the way from a blank screen to a deployed, real-world product. Vue.js and Nuxt.js are my home turf, and I work confidently across React and Next.js too. More recently I've gone full-stack, pairing Nuxt front-ends with Node.js back-ends to ship complete applications. Today I work as a freelancer, partnering with startups to build full web apps — landing pages, dashboards and management systems, e-commerce, portfolios, reservation platforms and more — always with clean, scalable code and an obsessive eye for detail.",
   email: "radwa2484@gmail.com",
@@ -348,14 +353,12 @@ export const industries = [
 //  Route registry — used by the floating experience switcher
 // ------------------------------------------------------------------------------
 export const experiences = [
-  { path: "/", label: "Original", tech: "Home", accent: "#f87171", light: true },
-  { path: "/1", label: "FLUX · Liquid WebGL", tech: "01", accent: "#a78bfa" },
-  { path: "/2", label: "ORBIT · 3D Particle Universe", tech: "02", accent: "#38bdf8" },
-  { path: "/3", label: "REEL · Horizontal Cinema", tech: "03", accent: "#fb7185" },
-  { path: "/6", label: "PETAL · Soft Editorial", tech: "06", accent: "#ec4899", light: true },
-  { path: "/8", label: "VEIL · Spotlight Reveal", tech: "08", accent: "#cbd5e1" },
-  { path: "/10", label: "NOVA · Hyperspace", tech: "10", accent: "#22d3ee" },
-  { path: "/14", label: "WORMHOLE · Tunnel Warp", tech: "14", accent: "#fb923c" },
+  { path: "/", label: "FLUX · Liquid WebGL", tech: "Home", accent: "#ec4899", light: true },
+  { path: "/1", label: "ORBIT · 3D Particle Universe", tech: "01", accent: "#38bdf8" },
+  { path: "/2", label: "REEL · Horizontal Cinema", tech: "02", accent: "#ff859b" },
+  { path: "/3", label: "PETAL · Cloud Sky", tech: "03", accent: "#2f8fd8", light: true },
+  { path: "/4", label: "VEIL · Spotlight Reveal", tech: "04", accent: "#cbd5e1" },
+  { path: "/5", label: "WORMHOLE · Tunnel Warp", tech: "05", accent: "#fb923c" },
 ];
 
 export default {

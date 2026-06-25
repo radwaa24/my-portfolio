@@ -155,14 +155,26 @@ onBeforeUnmount(() => {
     </div>
 
     <header class="hero">
+      <p class="eyebrow" v-reveal="{ delay: 40 }">{{ profile.heroTagline }}</p>
       <h1 v-reveal="{ delay: 80 }">{{ profile.name }}</h1>
-      <div class="hero-copy" v-reveal="{ delay: 160 }">
-        <p class="role">{{ profile.role }} — {{ profile.specialty }}</p>
-        <p class="tag">{{ profile.tagline }}</p>
+      <div class="hero-stack" v-reveal="{ delay: 140 }">
+        <span v-for="tech in profile.stack" :key="tech" class="stack-chip">{{ tech }}</span>
+      </div>
+      <div class="hero-copy" v-reveal="{ delay: 200 }">
+        <p class="tag">Front-end specialist orbiting Vue &amp; React — I engineer interfaces with gravity and launch complete full-stack apps powered by Nuxt.</p>
       </div>
       <div class="cta" v-reveal="{ delay: 320 }">
         <a class="btn" :href="profile.resume" target="_blank" v-magnetic="0.4">Resume</a>
-        <a class="btn ghost" href="#orbit-work" v-magnetic="0.3">Explore work</a>
+        <a
+          v-for="s in socials.filter((x) => x.name === 'GitHub' || x.name === 'LinkedIn')"
+          :key="s.name"
+          class="btn ghost"
+          :href="s.url"
+          target="_blank"
+          v-magnetic="0.3"
+        >
+          <i :class="`fi ${s.brand}`"></i>{{ s.name }}
+        </a>
       </div>
     </header>
 
@@ -288,7 +300,11 @@ onBeforeUnmount(() => {
 
 .hero { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(ellipse 85% 55% at 50% 45%, rgba(4, 6, 15, 0.6), transparent 72%); }
+.eyebrow { margin-bottom: 18px; font-family: ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.22em; color: var(--cyan); font-size: 13px; text-shadow: 0 0 18px rgba(56,189,248,0.5); }
 .hero h1 { font-size: clamp(48px, 12vw, 150px); font-weight: 800; letter-spacing: -0.03em; line-height: 0.9; text-shadow: 0 0 60px rgba(56,189,248,0.5); }
+.hero-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 24px; }
+.stack-chip { padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(56,189,248,0.3); background: rgba(56,189,248,0.07); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: #eaf6ff; }
+.cta .btn i { font-size: 16px; }
 .hero-copy { margin-top: 20px; padding: 16px 28px; border-radius: 18px; background: rgba(4,6,15,0.5); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(56,189,248,0.18); box-shadow: 0 20px 60px -30px rgba(56,189,248,0.5); }
 .role { font-size: clamp(16px,2.2vw,22px); color: #eaf6ff; }
 .tag { margin-top: 8px; color: rgba(219,234,254,0.8); }
